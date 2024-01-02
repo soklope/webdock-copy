@@ -1,0 +1,19 @@
+@use '../../../global-styling/mixins' as mix;
+@use '../../../global-styling/Variables.scss' as v;
+
+.sort-function-btn {
+  @include mix.filter-btn-styling;
+
+  &.active {
+    background: darken(v.$offwhite, 10%);
+  }
+
+    &__icon {
+    @include mix.arrow-icon-size;
+    background-image: url('../../../content/gfx/Icons/arrow-down-icon.svg');
+    }
+}
+
+.dropdown-menu {
+  @include mix.dropdown-menu-styling;
+}

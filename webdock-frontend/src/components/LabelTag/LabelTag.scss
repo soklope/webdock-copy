@@ -1,0 +1,40 @@
+@use '../../global-styling/Variables.scss' as v;
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 5px 2px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: white;
+}
+  
+    
+.tag-complete-color {
+    background-color: v.$green;
+}
+.tag-my-post-color {
+    background-color: v.$secondary-color;
+
+}
+.tag-review-color {
+   background-color: v.$light-green;
+}
+
+.tag-planned-color {
+    background-color: v.$blue;
+}
+
+.tag-in-progress-color {
+    background-color: v.$purple;
+}
+
+.tag-complete-color {
+    background-color: v.$green;
+}
+
+.tag-deprecated-color {
+    background-color: v.$kenneth;
+}

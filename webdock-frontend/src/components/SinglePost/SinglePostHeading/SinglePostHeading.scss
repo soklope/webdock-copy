@@ -1,0 +1,56 @@
+@use "../../../global-styling/Variables.scss" as v;
+@import '../../../global-styling/mixins';
+
+.single-post-heading {
+	@include flex-center;
+
+	@media screen and (min-width: v.$desktop-screen) {
+		gap: v.$gap-desktop;
+	}
+
+	&__upvote {
+		display: block;
+		@media screen and (min-width: calc(v.$desktop-screen * 2)) {
+			display: none;
+		}
+	}
+
+	&__meta {
+		width: 100%;
+		margin-bottom: 10px;
+
+		&-container {
+			@include flex-center(start);
+
+			@media screen and (min-width: v.$desktop-screen) {
+				gap: v.$gap-desktop;
+			}
+		}
+	}
+
+	&__title {
+		margin-bottom: 10px;
+		font-size: v.$h1;
+		font-family: v.$primary-color;
+
+		@media screen and (min-width: v.$desktop-screen) {
+			font-size: v.$h1-desktop;
+		}
+	}
+
+	&__desktop {
+		display: none;
+
+		color: v.$black;
+		font-family: v.$primary-font;
+		font-size: 12px;
+        
+        & span {
+            color: v.$grey;
+        }
+
+		@media screen and (min-width: v.$desktop-screen) {
+			@include flex-center($gap: 5px);
+		}
+	}
+}

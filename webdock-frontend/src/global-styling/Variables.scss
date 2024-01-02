@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;1,400&family=Raleway:ital,wght@0,200;0,400;0,600;0,700;1,400&display=swap');
+
+$primary-font: 'Raleway', sans-serif;
+$secondary-font: 'Poppins', sans-serif;
+
+$primary-color: #018647;
+$secondary-color: #ed8007;
+$white: #ffffff;
+$offwhite: #f9f9f9;
+$dropdown:#f0f0f0;
+$offblack: #1c1c1c;
+$black: #000000;
+
+$orange: #ED8007;
+$light-green: #85B5B5;
+$blue: #1FA0FF;
+$purple: #C17AFF;
+$green: #5bb33a;
+$grey: #CCCCCC;
+$kenneth: #ff1493;
+
+$medium-green: #1E9E85;
+
+$desktop-screen: 720px;
+
+$border-size: 2px;
+
+$drop-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1);
+
+// @media screen and (min-width: $desktop-screen) {
+//     $h1: 38px;
+// }
+
+$h1: 24px;
+$h2: 20px;
+$h3: 18px;
+$h4: 16px;
+
+$h1-desktop: 38px;
+$h2-desktop: 20px;
+$h3-desktop: 18px;
+$h4-desktop: 16px;
+
+$gap: 15px;
+$gap-desktop: 20px;

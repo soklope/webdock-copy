@@ -1,0 +1,17 @@
+@use '../../global-styling/mixins' as mix;
+@use '../../global-styling/Variables.scss' as v;
+
+.admin {
+    @include mix.flex-center(start, center, 0);
+
+    color: v.$primary-color;
+
+    &__logo {
+        @include mix.icon-image-centering('../../content/gfx/Icons/logo_15x10.png', 15px, 10px);
+        margin-left: 5px;
+    }
+}
+
+.user {
+    color: v.$secondary-color;
+}

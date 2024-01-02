@@ -1,0 +1,46 @@
+@use '../../global-styling/Variables.scss' as v;
+@import '../../global-styling/mixins.scss';
+
+.upvote-btn {
+    height: 55px;
+    width: 55px;
+
+    border-radius: 5px;
+    background-color: v.$offwhite;
+    color: v.$grey;
+    border: v.$border-size solid v.$grey;
+    cursor: pointer;
+    font-family: v.$primary-font;
+    
+    @include flex-center($gap: 0);
+    flex-direction: column;
+    
+    &:hover {
+        opacity: .9;
+    }
+    
+    &--active {
+        @extend .upvote-btn;
+        background-color: v.$primary-color;
+        border-color: v.$primary-color;
+    }
+
+    &__icon {
+        // I'm using a mixin with a variable being the url for the upvoted and un-upvoted states
+        @include icon-image-centering('../../content/gfx/Icons/upvote-arrow-white.svg', 20px, 20px);
+
+        &--active {
+            @include icon-image-centering('../../content/gfx/Icons/upvote-arrow.svg', 20px, 20px);
+        }
+    }
+
+    &__text {
+        color: v.$offblack;
+        font-family: v.$secondary-font;
+        
+        &--active {
+            color: v.$offwhite;
+            font-family: v.$secondary-font;
+        }
+    }
+}

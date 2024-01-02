@@ -1,0 +1,11 @@
+@use "../../global-styling/Variables.scss" as v;
+
+.toggle-switches-container {
+    gap: 20px;
+    justify-content: end;
+    display: flex;
+
+    @media screen and (min-width: v.$desktop-screen) {
+        justify-content: end;
+    }
+}

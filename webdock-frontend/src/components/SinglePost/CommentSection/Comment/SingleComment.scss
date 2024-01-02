@@ -1,0 +1,49 @@
+@use '../../../../global-styling/mixins' as mix;
+@use '../../../../global-styling/Variables.scss' as v;
+
+.replies-container {
+    margin-left: 50px;
+}
+
+.comment-user {
+    padding: 10px 0;
+    @include mix.flex-center(start);
+
+    &__avatarURL {
+        @include mix.flex-center(center, center, 0px);
+        background-color: v.$secondary-color;
+        height: 25px;
+        width: 25px;
+        border-radius: 100px;
+        text-transform: uppercase;
+        color: v.$white;
+        font-weight: 700;
+
+        &--admin {
+            @extend .comment-user__avatarURL;
+            background-color: v.$primary-color;
+        }
+    }
+}
+
+.comment-meta-container {
+    @include mix.flex-center(start, center, 10px);
+    margin-bottom: 20px;
+    padding: 5px 0;
+
+    &__icon {
+        display: inline-block;
+        @include mix.icon-image-centering('../../../../content/gfx/Icons/like-grey.svg', 25px, 25px);
+
+        cursor: pointer;
+
+        &:hover {
+            background-image: url('../../../../content/gfx/Icons/like-red.svg');
+        }
+    }
+
+    &__reply-btn a {
+        text-decoration: none;
+        color: v.$black;
+    }
+}

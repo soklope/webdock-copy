@@ -1,0 +1,53 @@
+@use '../../../global-styling/Variables.scss' as v;
+@use '../../../global-styling/mixins.scss' as mix;
+
+.search-function-btn {
+  @include mix.filter-btn-styling;
+
+  &__icon {
+    @include mix.icon-image-centering('../../../content/gfx/Icons/search-function-icon.svg', 20px, 20px);
+    margin-left: 5px; /* Adjust the margin to position the icon */
+  }
+}
+
+.search-input {
+  @include mix.filter-btn-styling;
+
+  &.active {
+    @include mix.filter-btn-styling;
+    cursor: initial;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    border: none;
+    background: transparent;
+    font-family: v.$secondary-font;
+    font-size: 15px;
+    font-weight: 500;
+    height: 35px;
+    width: 100%;
+    
+    &:focus, &:not(:focus) {
+      border-radius: 0px;
+      border-left:none;
+      border-right: none;
+      outline: none;
+    }
+  }
+
+  .input-icon {
+    @include mix.icon-image-centering('../../../content/gfx/Icons/search-function-icon.svg', 20px, 20px);
+    cursor: pointer;
+  }
+
+  .close-icon {
+    @include mix.icon-image-centering('../../../content/gfx/Icons/close-icon.svg', 20px, 20px);
+    cursor: pointer;
+  }
+}
+

@@ -1,0 +1,115 @@
+@use '../../global-styling/Variables.scss' as v;
+@use '../../global-styling/mixins' as mix;
+
+
+.single-post-view-toolbar {
+    @include mix.flex-center(space-between, center, 0);
+    
+    margin-bottom: 10px;
+}
+
+.single-post-view-back {
+    @include mix.flex-center(center, center, 0);
+    text-decoration: none;
+    color: v.$offblack;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.2s;
+
+    &:hover {
+        transition: 0.2s;
+        transform: scale(1.02);
+        background-color: v.$white;
+        box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+
+    &__icon {
+        display: none;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            display: inline-block;
+            background-size: contain;
+
+            @include mix.icon-image-centering('../../content/gfx/Icons/goBack.svg', 20px, 20px);
+        }
+    }
+}
+
+.single-post-view-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: v.$gap-desktop;
+    padding: 40px;
+
+    @media screen and (min-width: v.$desktop-screen) {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.single-post-container {
+    padding: 20px;
+    background-color: v.$white;
+    border-radius: 5px;
+
+    &__content {
+        margin-left: 75px;
+
+    }
+
+    &__merges {
+        margin: 10px 0px;
+        border-top: 1px solid v.$grey;
+        // border-bottom: 1px solid v.$grey;
+        padding: 10px 0;
+    }
+
+    &__li {
+        list-style: none;
+        color: v.$blue;
+    }
+}
+
+.single-post-view-heading {
+    @include mix.flex-center(start, start, 20px);
+    // 55+20 = 75
+
+    &__upvote {
+        display: none;
+
+        @media screen and (min-width: calc(v.$desktop-screen)) {
+            display: block;
+        }
+    }
+
+    .single-post-container {
+        padding: 20px;
+        background-color: v.$white;
+        border-radius: 5px;
+        box-shadow: v.$drop-shadow;
+        width: 75px;
+    }
+}
+
+.comment-missing-login {
+    background-color: v.$grey;
+    height: 64px;
+
+    @include mix.flex-center;
+
+}
+
+.new-comment-form {
+
+    form {
+
+        input {
+            width: 70%;
+            height: 35px;
+            font-size: 15px;
+            padding: 15px;
+        }
+    }
+}

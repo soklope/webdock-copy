@@ -1,0 +1,13 @@
+.relative {
+    position: relative;
+}
+
+.modal-background {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.30);
+    position: fixed; //Places relative to viewport and doesn't move when scrolling.
+    top: 0; //Places all the way on top (y-axes)
+    left: 0; //Places all the way to the left (x-axes)
+    z-index: 8;
+}

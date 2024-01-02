@@ -1,0 +1,42 @@
+@use "./Variables.scss" as v; 
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: v.$primary-font; // Set the font-family using the primary font variable.
+}
+
+main {
+	max-width: 1200px;
+}
+
+.background {
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(to bottom, #ffffffb3 25%, #ffffff00), url("../content/gfx/background-image.png");
+	background-attachment: fixed; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	background-position: center center;
+	overflow: auto;
+	position: relative;
+}
+
+.wrap {
+	padding: 80px 20px 0 20px;
+
+	@media screen and (min-width: v.$desktop-screen) {
+		max-width: 1200px;
+		margin: auto;
+
+	}
+}
+
+.hide-on-mobile {
+    display: none;
+	
+    @media screen and (min-width: v.$desktop-screen) {
+        display: block;
+    }
+}

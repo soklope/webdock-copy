@@ -1,0 +1,109 @@
+// Import variables from the 'Variables.scss' file
+@use '../../global-styling/Variables.scss' as v;
+
+// Styling for .category-btn-mypost-text class
+.Statusfilters-btn-mypost-text {
+    cursor: pointer;
+    border-style: solid;
+    position: relative;
+    width: 110px;
+    height: 35px;
+    flex-shrink: 0;
+    background-color: v.$white;
+    color: #404040;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: v.$secondary-font;
+    transition: 0.2s;
+
+
+    border-radius: 5px;
+    overflow: hidden;
+    outline: none;
+    border-radius: 5px;
+    border: 0.5px solid;
+
+    // Styling for the .category-btn-mypost-text__indicator sub-element
+    &__indicator {
+        width: 4px;
+        height: 100%;
+        position: absolute;
+        right: 0%;
+        top: 0;
+    }
+}
+
+// Background color classes for specific categories
+.MyPost {
+    background-color: v.$orange;
+}
+
+.Review {
+    background-color: v.$light-green;
+}
+
+.Planned {
+    background-color: v.$blue;
+}
+
+.InProgress {
+    background-color: v.$purple;
+}
+
+.Complete {
+    background-color: v.$green;
+}
+
+// Border color classes for specific categories
+// Use these classes to set border colors
+.MyPost-border-color {
+    border-color: v.$orange;
+}
+
+.Review-border-color {
+    border-color: v.$light-green;
+}
+
+.Planned-border-color {
+    border-color: v.$blue;
+}
+
+.InProgress-border-color {
+    border-color: v.$purple;
+}
+
+.Complete-border-color {
+    border-color: v.$green;
+}
+
+// Background color classes for specific categories when toggled
+.MyPost-background-color {
+    transition: 0.2s;
+    background-color: v.$orange;
+    color: white;
+}
+
+.Review-background-color {
+    transition: 0.2s;
+    background-color: v.$light-green;
+    color: white;
+}
+
+.Planned-background-color {
+    transition: 0.2s;
+    background-color: v.$blue;
+    color: white;
+}
+
+.InProgress-background-color {
+    transition: 0.2s;
+    background-color: v.$purple;
+    color: white;
+}
+
+.Complete-background-color {
+    transition: 0.2s;
+    background-color: v.$green;
+    color: white;
+}

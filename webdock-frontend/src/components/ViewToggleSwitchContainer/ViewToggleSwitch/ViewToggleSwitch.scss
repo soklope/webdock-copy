@@ -1,0 +1,50 @@
+@use '../../../global-styling/Variables.scss' as v;
+@import '../../../global-styling/mixins';
+
+.view-toggle-switch-tooltip-container {
+    position: relative;
+}
+
+.view-toggle-switch-tooltip-text {
+    position: absolute;
+    top: -25px;
+    left: 0px;
+    width: 115px;
+}
+
+.view-toggle-switch {
+    @include flex-center;
+    width: 50px;
+    height: 50px;
+    background-color: v.$white;
+    border-radius: 5px;
+    border: v.$primary-color 2px solid;
+    cursor: pointer;
+
+    &__roadmap {
+        @include icon-image-centering('../../../content/gfx/Icons/roadmap-view-icon.svg', 30px, 30px);
+
+        &--active {
+            @include toggle-switch-active;
+            background-image: url('../../../content/gfx/Icons/roadmap-view-icon-white.svg');
+            cursor: not-allowed;
+        }
+    }
+
+    &__list {
+        @include toggle-switch-default;
+        background-image: url('../../../content/gfx/Icons/list-view-icon.svg');
+
+        &--active {
+            @include toggle-switch-active;
+            background-image: url('../../../content/gfx/Icons/list-view-white.svg');
+            cursor: not-allowed;
+        }
+    }
+
+    @media screen and (min-width: v.$desktop-screen) {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+    }
+}

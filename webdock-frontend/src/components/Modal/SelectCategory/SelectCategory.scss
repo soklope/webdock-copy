@@ -1,0 +1,66 @@
+@use '../../../global-styling/mixins' as mix;
+@use '../../../global-styling/Variables.scss' as v;
+
+.category-selector {
+    position: relative;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.category-options {
+    display: none;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: v.$white;
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    border-radius: 5px;
+    border-top: none;
+}
+
+.category-option {
+    padding: 10px 20px;
+    font-family: v.$primary-font;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.40);
+    cursor: pointer;
+
+    &:hover {
+        background-color: v.$dropdown;
+    }
+}
+
+.hasChanged {
+    color: v.$offblack !important;
+}
+
+
+.category-selector-btn {
+    /* Your button styles */
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFDFD;
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: v.$primary-font;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.40);
+    padding-left: 20px;
+}
+
+.category-selector-btn-icon {
+    display: inline-block;
+    @include mix.icon-image-centering('../../../content/gfx/Icons/drop-down-grey-icon.svg', 20px, 10px);
+    margin-right: 20px;
+}
+
+/* Show options when the dropdown button is clicked */
+.category-selector-btn:focus+.category-options,
+.category-options:hover {
+    display: block;
+}

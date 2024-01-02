@@ -1,0 +1,143 @@
+@use '../../global-styling/Variables.scss' as v;
+@use '../../global-styling/mixins' as mix;
+
+::placeholder {
+    font-family: v.$primary-font;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.40);
+}
+
+:focus::placeholder {
+    color: v.$offblack;
+}
+
+.modal {
+    position: relative;
+
+    &__bg {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.30);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 8;
+
+        @include mix.flex-center;
+    }
+
+    &__container {
+        width: 100%;
+        height: calc(100% - 70px);
+        padding: 20px;
+        background-color: v.$white;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            max-width: 900px;
+            height: auto;
+
+            border-radius: 5px;
+        }
+    }
+
+    &__close {
+        @include mix.flex-center(end);
+        cursor: pointer;
+        margin-left: auto;
+        width: 25px;
+        height: 25px;
+
+        &-icon {
+            @include mix.icon-image-centering('../../content/gfx/Icons/close-icon.svg', 20px, 20px);
+        }
+    }
+
+    &__title {
+        font-family: v.$primary-font;
+        font-weight: 600;
+        font-size: 16px;
+        color: v.$offblack;
+        margin-bottom: 10px;
+    }
+
+
+    &__input {
+        margin-bottom: 20px;
+        padding: 20px;
+
+        width: 100%;
+        height: 40px;
+        background-color: #FFFDFD;
+        border: 1px solid rgba(0, 0, 0, 0.20);
+        border-radius: 5px;
+    }
+
+    &__desc {
+        margin-bottom: 20px;
+        padding: 20px;
+
+        width: 100%;
+        height: 150px;
+        background-color: #FFFDFD;
+        border: 1px solid rgba(0, 0, 0, 0.20);
+        border-radius: 5px;
+        resize: none;
+    }
+
+    &__upload-btn {
+        width: 58px;
+        height: 58px;
+        border-radius: 5px;
+        background: v.$offwhite;
+        border: none;
+        margin-bottom: 20px;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            margin-bottom: 0;
+        }
+    }
+
+    &__upload-icon {
+        @include mix.icon-image-centering('../../content/gfx/Icons/files.svg', 35px, 35px);
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    &__create-post-btn {
+        @include mix.flex-center(end, end, 10px);
+        float: right;
+        padding: 10px 60px;
+        background-color: v.$primary-color;
+        color: v.$white;
+        font-family: v.$primary-font;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.75px;
+        text-transform: uppercase;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        margin-top: 20px;
+
+        &-icon {
+            margin: auto;
+            display: inline-block;
+            @include mix.icon-image-centering('../../content/gfx/Icons/create-icon.svg', 15px, 15px);
+        }
+    }
+}
+
+#fileUpload {
+    display: none;
+}
+
+.file-display {
+    @include mix.flex-center(start, center, 5px);
+}
+
+.file-display img {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}

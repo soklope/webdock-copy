@@ -1,0 +1,97 @@
+@use '../../global-styling/Variables.scss' as v;
+
+.heading {
+
+    &__title {
+        font-size: v.$h1;
+        margin-bottom: 20px;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            font-size: v.$h1-desktop;
+        }
+    }
+}
+
+.filter-flex-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @media screen and (min-width: v.$desktop-screen) {
+        align-items: end;
+    }
+}
+
+.filter-grid-container {
+    display: grid;
+    grid-template-areas:
+        "createBtn toggleBtn"
+        // "sortFilter sortFilter"
+    ;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (min-width: v.$desktop-screen) {
+        gap: 0px;
+        grid-template-areas:
+            "createBtn"
+            "toggleBtn"
+            "sortFilter"
+        ;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        // grid-template-rows: 1fr 1fr 1fr;
+    }
+}
+
+.filter-grid-create-btn {
+    grid-area: createBtn;
+}
+
+.filter-grid-toggle-btn {
+    grid-area: toggleBtn;
+}
+
+.filter-grid-sort-filter {
+    grid-area: sortFilter;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-right-animation {
+    animation: slideRight 0.5s;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-left-animation {
+    animation: slideLeft 0.5s;
+}
+
+.roadmap-flex-container {
+
+    @media screen and (min-width: v.$desktop-screen) {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        overflow: auto;
+        /* Apply a shadow on the right side */
+    }
+}

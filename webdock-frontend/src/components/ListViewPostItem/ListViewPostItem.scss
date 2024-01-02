@@ -1,0 +1,171 @@
+@use '../../global-styling/Variables.scss' as v;
+@use '../../global-styling/mixins' as mix;
+
+.tag-my-post-color {
+    background-color: #ED8007;
+}
+
+.tag-review-color {
+    background-color: #85B5B5;
+}
+
+.tag-planned-color {
+    background-color: v.$blue;
+}
+
+.tag-in-progress-color {
+    background-color: v.$purple;
+}
+
+.tag-complete-color {
+    background-color: v.$green;
+}
+
+.listview-child-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-radius: 5px;
+    gap: 10px;
+    text-decoration: none;
+    background-color: white;
+    color: v.$black;
+    box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    margin-bottom: 10px;
+
+    &__flex {
+        @include mix.flex-center(center, center, 10px)
+    }
+
+    @media screen and (min-width: v.$desktop-screen) {
+        padding: 0px 0px 0px 20px;
+        height: 110px;
+        align-items: start;
+        overflow: hidden;
+    }
+
+    &__date {
+        display: none;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+    }
+
+    &:hover {
+        transition: 0.1s;
+        transform: scale(1.01);
+        cursor: pointer;
+    }
+
+    &__button {
+        @media screen and (min-width: v.$desktop-screen) {
+            padding: 15px 0px;
+        }
+    }
+
+    &__title-category-tag {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: auto;
+        font-family: v.$secondary-font;
+        height: 100%;
+        align-items: start;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            justify-content: start;
+            gap: 10px;
+            padding: 15px 0px;
+        }
+    }
+
+    &__title {
+        font-size: 0.75rem;
+        font-weight: 600;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            font-size: 0.9rem;
+        }
+    }
+
+    &__category {
+        font-size: 0.75rem;
+        font-weight: 400;
+    }
+
+    &__tag-parent {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__tag {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 2px 5px 2px 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        color: white;
+    }
+
+    &__comment {
+        position: absolute;
+        right: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 100%;
+        gap: 5px;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            align-items: start;
+            padding: 15px 0px;
+        }
+
+        &__icon {
+            height: 16px;
+            width: 18px;
+            background-image: url(../../content/gfx/Icons/comment-icon.svg);
+        }
+
+        p {
+            font-size: 0.75rem;
+        }
+    }
+
+    &__content {
+        display: none;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            display: block;
+            height: 20px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: clamp(60ch, 80%, 100ch);
+        }
+    }
+
+    &__indicator {
+        display: none;
+
+        @media screen and (min-width: v.$desktop-screen) {
+            position: absolute;
+            right: 0;
+
+            display: block;
+            height: 100%;
+            width: 5px;
+            background-color: hotpink;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h1>Posts Updated in the Last 24 Hours</h1>
+    <% for (let i = 0; i < posts.length; i++) { %>
+        <p><%= posts[i].title %></p>
+        <p><%= posts[i].content %></p>
+        <a href="http://kmfpgroup5.vps.webdock.cloud:5173/posts/<%= posts[i].id %> ">Go to post </a>
+        <p> <%= posts[i].createdAt %> </p>
+
+        <!-- created at/updated at here -->
+        
+        <hr /> 
+    <% } %>
+</body>
+</html>
