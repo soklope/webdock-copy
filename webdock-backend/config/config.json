@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "zob4hSbUGSAM",
-    "database": "webdock-database-exam-dev",
+    "database": "webdock-database-soeren",
     "host": "kmfpgroup5.vps.webdock.cloud",
     "dialect": "mysql"
   },

@@ -87,6 +87,13 @@ module.exports = {
           email: 'ahmo38299@edu.ucl.dk',
           createdAt: new Date(),
           updatedAt: new Date(),
+        },
+        {
+          id: 22649,
+          name: 'Søren Kloster Pedersen',
+          email: 'skpe38484@edu.ucl.dk',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }
   ], {});
   

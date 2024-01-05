@@ -283,6 +283,20 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 21,
+          title: "Notification Test Post",
+          content:
+            `Share your most challenging debugging experiences in server hosting. Learn together! Stay informed about the latest developments in server hosting as developers share updates on the status of hosting technologies. Get insights into emerging trends and technologies. The world of server hosting is dynamic, with constant advancements and innovations. 
+            
+            In this status update, developers share the latest happenings in server hosting, including new technologies, updates, and emerging trends. Stay ahead of the curve by gaining valuable insights into the evolving landscape of server hosting.`,
+          category_id: 2,
+          user_id: 22649,
+          status_id: 2,
+          image: "hosting_status_update.gif",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

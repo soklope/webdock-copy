@@ -14,6 +14,7 @@ const CommentController = require ('../controllers/commentController.js')
 const router = express.Router();
 
 router.get('/users', UserController.getUserWithRole);
+router.get('/user-notifications/:userId', UserController.userGotNewNotification);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
