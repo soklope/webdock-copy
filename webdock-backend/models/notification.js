@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "type_of_notification_fk",
         targetKey: "id",
       });
+
+      Notification.belongsTo(models.User, {
+        foreignKey: "action_user_fk",
+        targetKey: "id",
+      });
     }
   }
   Notification.init({

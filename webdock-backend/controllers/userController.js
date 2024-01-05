@@ -29,6 +29,11 @@ const userGotNewNotification = async (req, res) => {
         {
           model: db.Type_of_notification,
           attributes: ["notification_type"]
+        },
+
+        {
+          model: db.User,
+          attributes: ["name"]
         }
       ]
     });

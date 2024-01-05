@@ -319,6 +319,13 @@ const deleteItemById = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
 const upvotePost = async (req, res) => {
   const postId = req.params.id;
   const user = req.body;
@@ -326,21 +333,42 @@ const upvotePost = async (req, res) => {
   try {
     const post = await db.Post.findByPk(postId);
 
-     const existingUpvote = await db.PostHasUpvote.findOne({
+    const existingUpvote = await db.PostHasUpvote.findOne({
       where: {
         post_id: postId,
         user_id: user.id,
       },
     });
 
+    const existingNotification = await db.Notification.findOne({
+      where: {
+        post_fk: postId,
+        action_user_fk: user.id,
+      },
+    });
+
     if (existingUpvote) {
-      await existingUpvote.destroy();
+      await existingUpvote.destroy(), existingNotification.destroy();
       return res.json({ success: true, message: "Upvote removed successfully!" });
     }
+
+    // if (existingNotification) {
+    //   await existingNotification.destroy();
+    //   return res.json({ success: true, message: "Notification removed successfully!" });
+    // }
     
     const createdUpvote = await db.PostHasUpvote.create({
       post_id: postId,
       user_id: user.id,
+    });
+
+    const createdNotification = await db.Notification.create({
+      post_fk: postId,
+      target_user_fk: 2201,
+      action_user_fk: user.id,
+      type_of_notification_fk: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     if (!post) {
@@ -349,12 +377,22 @@ const upvotePost = async (req, res) => {
 
     console.log(user.id);
 
-    res.json({ success: true, message: "Upvote successful!", createdUpvote });
+    res.json({ success: true, message: "Upvote successful!", createdUpvote, createdNotification });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
   getPostsWithStatus,
