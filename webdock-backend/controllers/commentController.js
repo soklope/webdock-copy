@@ -47,6 +47,13 @@ const comment = (req, res) => {
 const createNewComment = async (req, res) => {
   try {
     const { content, user_id, post_id } = req.body;
+
+    const postAuthor = await db.Post.findOne({
+      where: {
+        id: post_id,
+      },
+    });
+    
     console.log("Request Body:", req.body);
 
     const result = await db.Comment.create({
@@ -55,18 +62,24 @@ const createNewComment = async (req, res) => {
       post_id
     });
 
-    // console.log("External API Response:", responseData);
+    const createdNotification = await db.Notification.create({
+      post_fk: post_id,
+      target_user_fk: postAuthor.user_id,
+      action_user_fk: user_id,
+      type_of_notification_fk: 2,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
     res.status(201).json({ message: "Data saved successfully", data: result });
 
   } catch (error) {
 
-    // sequelize error handling:
     if (error.name === "SequelizeValidationError") {
       res
         .status(400)
         .json({ error: "Validation failed", details: error.errors });
     } else {
-      // other errors:
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }

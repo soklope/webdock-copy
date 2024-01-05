@@ -33,7 +33,7 @@ const userGotNewNotification = async (req, res) => {
 
         {
           model: db.User,
-          attributes: ["name"]
+          attributes: ["name", "email"]
         }
       ]
     });

@@ -344,6 +344,13 @@ const upvotePost = async (req, res) => {
       where: {
         post_fk: postId,
         action_user_fk: user.id,
+        type_of_notification_fk: 1
+      },
+    });
+
+    const postAuthor = await db.Post.findOne({
+      where: {
+        id: postId,
       },
     });
 
@@ -351,11 +358,6 @@ const upvotePost = async (req, res) => {
       await existingUpvote.destroy(), existingNotification.destroy();
       return res.json({ success: true, message: "Upvote removed successfully!" });
     }
-
-    // if (existingNotification) {
-    //   await existingNotification.destroy();
-    //   return res.json({ success: true, message: "Notification removed successfully!" });
-    // }
     
     const createdUpvote = await db.PostHasUpvote.create({
       post_id: postId,
@@ -364,7 +366,7 @@ const upvotePost = async (req, res) => {
 
     const createdNotification = await db.Notification.create({
       post_fk: postId,
-      target_user_fk: 2201,
+      target_user_fk: postAuthor.user_id,
       action_user_fk: user.id,
       type_of_notification_fk: 1,
       createdAt: new Date(),
@@ -375,9 +377,7 @@ const upvotePost = async (req, res) => {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    console.log(user.id);
-
-    res.json({ success: true, message: "Upvote successful!", createdUpvote, createdNotification });
+    res.json({ success: true, message: "Upvote successful!", createdUpvote, createdNotification, postAuthor });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
