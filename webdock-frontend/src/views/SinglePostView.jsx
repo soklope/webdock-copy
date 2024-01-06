@@ -74,6 +74,16 @@ export default function SinglePostView() {
     return <div>Loading...</div>;
   }
 
+  const handleNewReply = (newReply) => {
+    const currentPost = post;
+
+    const commentIndex = currentPost.Comments.findIndex(x => x.id === newReply.comment_id);
+
+    currentPost.Comments[commentIndex].Replies.push(newReply);
+
+    setPost(currentPost);
+  };
+
   const handleNewComment = (newComment) => {
     setPost((prevPost) => ({
       ...prevPost,
@@ -145,6 +155,7 @@ export default function SinglePostView() {
                 comments={post.Comments}
                 postId={post.id}
                 updateComments={handleNewComment}
+                updateReply={handleNewReply}
               />
             </div>
           </div>

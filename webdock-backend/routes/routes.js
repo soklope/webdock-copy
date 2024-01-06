@@ -31,6 +31,7 @@ router.get('/getCategories', CategoryController.getCategories);
 router.post('/handlelogin', VerifyController.verifyUser);
 
 router.post('/createcomment', CommentController.createNewComment);
+router.post('/createReply', CommentController.createNewReply);
 
 module.exports = router;
 
