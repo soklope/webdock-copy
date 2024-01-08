@@ -2,24 +2,24 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Type_of_notifications', [
       {
         id: 1,
-        notification_type: "Upvote",
+        notification_type: "upvote",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 2,
-        notification_type: "Comment",
+        notification_type: "comment",
         createdAt: new Date(),
         updatedAt: new Date(),
       }
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

@@ -21,6 +21,9 @@ module.exports = {
       type_of_notification_fk: {
         type: Sequelize.INTEGER
       },
+      notification_seen: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

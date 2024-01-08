@@ -2,36 +2,69 @@
 @use "../../global-styling/mixins" as mix;
 
 .notification-dropdown-container {
+    z-index: 100;
     position: absolute;
     background-color: v.$white;
     top: 100%;
     left: 50%;
-    transform: translate(-50%, -20%);
-    width: 300px;
+    transform: translate(-50%, -5%);
+    width: 320px;
     padding: 5px;
     border-radius: 5px;
     box-shadow: v.$drop-shadow;
+    height: 200px;
+    overflow: auto;
 
     &__title {
         font-weight: 700;
+        background-color: v.$white;
+        width: 100%;
+        padding: 5px;
     }
 
     &__list {
         display: flex;
         justify-content: flex-start;
         list-style: none;
-        flex-direction: column;
+        flex-direction: column-reverse;
+        gap: 5px;
     }
 
     &__list-item {
+        display: flex;
+        align-items: center;
+        padding: 5px;
         width: 100%;
         transition: 0.25s;
-        display: flex;
         gap: 5px;
+        border-radius: 5px;
+        font-size: 0.8rem;
 
         &:hover {
             transition: 0.25s;
             background-color: rgba(0, 0, 0, 0.056);
         }
+    }
+
+    &__action {
+        display: flex;
+        gap: 5px;
+
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+
+        &__name {
+            font-weight: 600;
+        }
+    }
+
+    &__seen-dot {
+        font-size: 30px;
+        margin-left: auto;
+        margin-right: 5px;
+        color: v.$orange;
     }
 }

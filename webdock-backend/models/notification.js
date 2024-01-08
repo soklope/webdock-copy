@@ -19,13 +19,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "action_user_fk",
         targetKey: "id",
       });
+
+      Notification.belongsTo(models.Post, {
+        foreignKey: "post_fk",
+        targetKey: "id",
+      });
     }
   }
   Notification.init({
     post_fk: DataTypes.INTEGER,
     target_user_fk: DataTypes.INTEGER,
     action_user_fk: DataTypes.INTEGER,
-    type_of_notification_fk: DataTypes.INTEGER
+    type_of_notification_fk: DataTypes.INTEGER,
+    notification_seen: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Notification',

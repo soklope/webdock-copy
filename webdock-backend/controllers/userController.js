@@ -34,6 +34,11 @@ const userGotNewNotification = async (req, res) => {
         {
           model: db.User,
           attributes: ["name", "email"]
+        },
+
+        {
+          model: db.Post,
+          attributes: ["title"]
         }
       ]
     });
