@@ -46,6 +46,16 @@ nav {
       background-repeat: no-repeat;
     }
 
+    &__globe {
+      position: relative;
+      height: 45px;
+      width: 45px;
+      background-image: url('../../content/images/globe.png');
+      scale: 0.85;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
     @media screen and (min-width: v.$desktop-screen) {
       list-style: none;
       display: flex;
@@ -65,7 +75,7 @@ nav {
         background-size: 85%;
       }
 
-      li {
+      .navigation-list-item {
         display: flex;
         align-items: center;
         justify-content: center;

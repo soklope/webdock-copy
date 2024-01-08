@@ -4,10 +4,14 @@ import { Sling as Hamburger } from "hamburger-react";
 import "./Navigation.scss";
 import logo from "../../content/images/logo_200x200.png";
 import userStore from "../../stores/loginStore";
+import NotificationDropdown from "../../components/NotificationDropdown/NotificationDropdown";
+import fetchAllNotifications from "../../services/fetchAllNotifications";
 
 export default function Navigation() {
   const { logout } = userStore()
   const [isOpen, setIsOpen] = useState(false);
+  const [notificationDropdown, setNotificationDropdown] = useState(false)
+  const [notificationArrayData, setNotificationArrayData] = useState([])
   const user = localStorage.getItem("user")
 
   const toggleDropdownMenu = () => {
@@ -16,8 +20,24 @@ export default function Navigation() {
 
   const handleLogoutClick = () => {
     logout();
-    // window.location.href = "/login"
   };
+
+  const toggleNotificationDropdown = () => [
+    setNotificationDropdown(!notificationDropdown)
+  ]
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const fetchedData = await fetchAllNotifications(22649);
+        setNotificationArrayData(fetchedData)
+        console.log(fetchedData);
+      } catch (error) {
+        console.error('Error setting state:', error);
+      }
+    };
+    fetchNotifications();
+  }, []); 
 
   return (
     <nav>
@@ -38,11 +58,22 @@ export default function Navigation() {
           user &&
           <>
             <ul className="menu-items">
-              <li>
+              <li className="navigation-list-item" onClick={toggleNotificationDropdown}>
+                <Link className="menu-items__globe" />
+                {
+                  notificationDropdown && (
+                    <NotificationDropdown 
+                      NotificationArray={notificationArrayData}
+                    />
+                  )
+                }
+              </li>
+
+              <li className="navigation-list-item">
                 <Link className="menu-items__profile" />
               </li>
 
-              <li onClick={handleLogoutClick}>
+              <li className="navigation-list-item" onClick={handleLogoutClick}>
                 <Link className="menu-items__log-out" />
               </li>
             </ul>
