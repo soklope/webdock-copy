@@ -52,18 +52,24 @@
 .reply-button-style {
     border: none;
     background-color: v.$white;
-    width: auto;
+    width: 15%;
 }
 .reply-input-container {
+    input{
+        width: 85%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+    }
     .send-button-style{
         border: none;
         background-color: v.$white;
-        margin-left: 30px;  
         font-size: 16px;
-
-        
-        
+        font-weight: 600;
     }
+    display: flex;
     margin-bottom: 20px; 
     margin-top: -20px;
+    gap: 15px;
 }

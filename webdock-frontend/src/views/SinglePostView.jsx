@@ -73,7 +73,7 @@ export default function SinglePostView() {
   if (!post) {
     return <div>Loading...</div>;
   }
-
+// replies //
   const handleNewReply = (newReply) => {
     const currentPost = post;
 

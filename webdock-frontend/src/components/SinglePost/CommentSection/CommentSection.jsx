@@ -15,6 +15,7 @@ export default function CommentSection({ comments, postId, updateComments, updat
 			}
 	);
 	
+	// replies 
 	const handleReplyClick = async (replyText, comentId) => {
 		//Call backend recive the new created reply
 
@@ -34,7 +35,7 @@ export default function CommentSection({ comments, postId, updateComments, updat
 			if(response.ok) {
 				const result = await response.json();
 
-				const newReply = { //Test return object (Replace with the returned object from backend)
+				const newReply = { 
 					id: result.data.id, 
 					content: result.data.content, 
 					user_id: result.data.user_id, 

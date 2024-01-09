@@ -61,7 +61,7 @@ export default function SingleComment({ User, content, Replies, createdAt, id, h
               setReplying(false);
               handleReplyClick();
               }}>
-              Send
+              Submit
               </button>
           </div>
         )}
@@ -77,3 +77,4 @@ export default function SingleComment({ User, content, Replies, createdAt, id, h
     </div>
   );
 }
+
