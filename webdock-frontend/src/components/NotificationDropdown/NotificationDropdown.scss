@@ -1,5 +1,6 @@
 @use "../../global-styling/Variables.scss" as v;
 @use "../../global-styling/mixins" as mix;
+@import '../../global-styling/mixins.scss';
 
 .notification-dropdown-container {
     z-index: 100;
@@ -36,7 +37,7 @@
         padding: 5px;
         width: 100%;
         transition: 0.25s;
-        gap: 5px;
+        gap: 15px;
         border-radius: 5px;
         font-size: 0.8rem;
 
@@ -67,4 +68,39 @@
         margin-right: 5px;
         color: v.$orange;
     }
+}
+
+.notification-type {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    right: -5px;
+    bottom: -5px;
+    background-color: v.$white;
+    box-shadow: v.$drop-shadow;
+}
+
+.comment {
+    background-image: url("../../content/gfx/Icons/comment-icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: 65%;
+    background-position: center;
+}
+
+.upvote {
+    background-image: url("../../content/gfx/Icons/upvote-arrow-white.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: 60%;
+    background-position: center;
+}
+
+.move {
+    background-image: url('../../content/gfx/Icons/move-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: 65%;
+    background-position: center;
 }

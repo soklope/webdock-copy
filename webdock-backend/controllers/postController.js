@@ -2,6 +2,7 @@
 const db = require("../models");
 const category = require("../models/category");
 const sequelize = require("sequelize");
+const NotificationService = require('../services/notificationCountService')
 
 const getPostsWithStatus = (req, res) => {
   db.Post.findAll({
@@ -128,7 +129,7 @@ const post = (req, res) => {
       {
         model: db.User,
         attributes: ["name", "email", "id"],
-        
+
       },
     ],
   })
@@ -274,33 +275,6 @@ const createNewPost = async (req, res) => {
   }
 };
 
-const changeStatus = async (req, res) => {
-  try {
-    const postId = req.params.id;
-    const newStatus = req.params.status;
-
-    const post = await db.Post.findByPk(postId);
-
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-    const oldStatus = post.status_id;
-    post.status_id = newStatus;
-
-    await post.save();
-
-    res.status(200).json({
-      message: "Post status updated successfully",
-      postId,
-      oldStatus,
-      newStatus,
-    });
-  } catch (error) {
-    console.error("Error changing post status:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 const deleteItemById = async (req, res) => {
   const itemId = req.params.id;
 
@@ -322,6 +296,56 @@ const deleteItemById = async (req, res) => {
 
 
 
+
+
+
+
+
+
+const changeStatus = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const newStatus = req.params.status;
+
+    const post = await db.Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    const oldStatus = post.status_id;
+    post.status_id = newStatus;
+
+    await post.save();
+
+    const postAuthor = await db.Post.findOne({
+      where: {
+        id: postId,
+      },
+    });
+
+    const createdNotification = await db.Notification.create({
+      post_fk: postId,
+      target_user_fk: postAuthor.user_id,
+      action_user_fk: 22649,
+      type_of_notification_fk: 3,
+      notification_seen: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    await NotificationService.checkAndRemoveOldestNotifications(postAuthor.user_id, 10);
+
+    res.status(200).json({
+      message: "Post status updated successfully",
+      postId,
+      oldStatus,
+      newStatus,
+    });
+  } catch (error) {
+    console.error("Error changing post status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 
 
@@ -358,7 +382,7 @@ const upvotePost = async (req, res) => {
       await existingUpvote.destroy(), existingNotification.destroy();
       return res.json({ success: true, message: "Upvote removed successfully!" });
     }
-    
+
     const createdUpvote = await db.PostHasUpvote.create({
       post_id: postId,
       user_id: user.id,
@@ -369,6 +393,7 @@ const upvotePost = async (req, res) => {
       target_user_fk: postAuthor.user_id,
       action_user_fk: user.id,
       type_of_notification_fk: 1,
+      notification_seen: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -376,6 +401,8 @@ const upvotePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
+
+    await NotificationService.checkAndRemoveOldestNotifications(user.id, 10);
 
     res.json({ success: true, message: "Upvote successful!", createdUpvote, createdNotification, postAuthor });
   } catch (error) {

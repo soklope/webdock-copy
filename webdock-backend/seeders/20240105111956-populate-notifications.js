@@ -10,7 +10,7 @@ module.exports = {
         target_user_fk: 22649,
         action_user_fk: 2200,
         type_of_notification_fk: 1,
-        notification_seen: true,
+        notification_seen: false,
         createdAt: new Date("2024-01-05 13:32:07"),
         updatedAt: new Date(),
       },

@@ -6,6 +6,7 @@ import logo from "../../content/images/logo_200x200.png";
 import userStore from "../../stores/loginStore";
 import NotificationDropdown from "../../components/NotificationDropdown/NotificationDropdown";
 import fetchAllNotifications from "../../services/fetchAllNotifications";
+import useNotificationArrayStore from "../../stores/notificationStore";
 
 export default function Navigation() {
   const { logout } = userStore()
@@ -13,24 +14,28 @@ export default function Navigation() {
   const [notificationDropdown, setNotificationDropdown] = useState(false)
   const [notificationArrayData, setNotificationArrayData] = useState([])
   const user = localStorage.getItem("user")
+  const { setNotificationStore } = useNotificationArrayStore()
 
   const toggleDropdownMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
   };
-
+  
   const handleLogoutClick = () => {
     logout();
   };
-
+  
   const toggleNotificationDropdown = () => [
-    setNotificationDropdown(!notificationDropdown)
+    setNotificationDropdown(!notificationDropdown),
   ]
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      const parsedUser = JSON.parse(user)
+
       try {
-        const fetchedData = await fetchAllNotifications(22649);
+        const fetchedData = await fetchAllNotifications(parsedUser.id);
         setNotificationArrayData(fetchedData)
+        setNotificationStore(fetchedData)
         console.log(fetchedData);
       } catch (error) {
         console.error('Error setting state:', error);

@@ -15,6 +15,12 @@ module.exports = {
         notification_type: "comment",
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      {
+        id: 3,
+        notification_type: "status_change",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
     ], {});
   },

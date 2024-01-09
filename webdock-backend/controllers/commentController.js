@@ -1,5 +1,6 @@
 // controllers/userController.js
 const db = require("../models");
+const NotificationService = require('../services/notificationCountService')
 
 const getComment = (req, res) => {
   db.Comment.findAll({
@@ -45,6 +46,7 @@ const comment = (req, res) => {
 };
 
 const createNewComment = async (req, res) => {
+
   try {
     const { content, user_id, post_id } = req.body;
 
@@ -53,7 +55,7 @@ const createNewComment = async (req, res) => {
         id: post_id,
       },
     });
-    
+
     console.log("Request Body:", req.body);
 
     const result = await db.Comment.create({
@@ -67,11 +69,14 @@ const createNewComment = async (req, res) => {
       target_user_fk: postAuthor.user_id,
       action_user_fk: user_id,
       type_of_notification_fk: 2,
+      notification_seen: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
-    res.status(201).json({ message: "Data saved successfully", data: result });
+    await NotificationService.checkAndRemoveOldestNotifications(user_id, 10);
+
+    res.status(201).json({ message: "Data saved successfully", data: result, notification: createdNotification });
 
   } catch (error) {
 
