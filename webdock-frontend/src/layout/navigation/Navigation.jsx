@@ -36,7 +36,7 @@ export default function Navigation() {
         const fetchedData = await fetchAllNotifications(parsedUser.id);
         setNotificationArrayData(fetchedData)
         setNotificationStore(fetchedData)
-        console.log(fetchedData);
+        // console.log(fetchedData);
       } catch (error) {
         console.error('Error setting state:', error);
       }

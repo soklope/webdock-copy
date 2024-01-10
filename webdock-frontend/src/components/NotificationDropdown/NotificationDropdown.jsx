@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react"
 import "./NotificationDropdown.scss"
 import { checkAdmin } from "../../helper/checkAdmin"
 import timeAgo from "../../helper/timeAgo"
-import useNotificationArrayStore from "../../stores/notificationStore"
 
 export default function NotificationDropdown( {NotificationArray}) {
-    const { notificationArray } = useNotificationArrayStore()
-    const [seen, setSeen] = useState(false)
 
     const redirectToPost = (postId) => {
         window.location.href = `/posts/${postId}`
@@ -39,41 +36,32 @@ export default function NotificationDropdown( {NotificationArray}) {
                 return "move";
         }
     };
-
-    useEffect(() => {
-        const handleChangeNotification = async () => {
-            try {
-                for (const notification of notificationArray) {
-                    const response = await fetch(`${window.apiHostName}/v1/notifications/${notification.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            notification_seen: true,
-                        }),
-                    });
+    
+    const hoverNotification = async (notification) => {
+        if (notification.notification_seen) return
         
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log(`Notification ${notification.id} status updated successfully`, data);
-                    } else {
-                        console.error(`Failed to update notification ${notification.id} seen value`);
-                    }
-                }
-            } catch (error) {
-                console.error('Error updating notification status:', error);
-            }
-          };
-          handleChangeNotification()
-    }, [])
+        await fetch(`${window.apiHostName}/v1/notifications/${notification.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            notification_seen: true,
+          }),
+        }).then(() => {
+            console.log('All notifications updated successfully');
+          })
+          .catch(error => {
+            console.error('Error updating notifications:', error);
+          });
+    }
 
     return (
         <div className="notification-dropdown-container">
             <p className="notification-dropdown-container__title">Notifications</p>
             <ul className="notification-dropdown-container__list">
                 {NotificationArray.map(item => (
-                    <li onClick={() => redirectToPost(item.post_fk)} className="notification-dropdown-container__list-item" key={item.id}>
+                    <li onClick={() => redirectToPost(item.post_fk)} onMouseEnter={() => hoverNotification(item)} className="notification-dropdown-container__list-item" key={item.id}>
                         <div className={`comment-user__avatarURL${item.User && checkAdmin(item.User.email) ? "--admin" : ""}`}>
                             {item.User.name.charAt(0)}
                             <div className={`notification-type ${getNotificationTypeForClass(item.Type_of_notification.notification_type)}`}></div>

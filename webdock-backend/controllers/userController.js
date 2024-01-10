@@ -50,22 +50,6 @@ const userGotNewNotification = async (req, res) => {
   }
 };
 
-
-// const notification = async (req, res) => {
-//   const notificationId = req.params.notificationId;
-
-//   try {
-//     const notifications = await db.Notification.findAll({
-//       where: { id: notificationId },
-//     });
-
-//     res.json(notifications);
-//   } catch (error) {
-//     console.error(error);
-//     res.sendStatus(500);
-//   }
-// };
-
 const notification = async (req, res) => {
   const notificationId = req.params.notificationId;
 
@@ -79,11 +63,9 @@ const notification = async (req, res) => {
     );
 
     if (updatedRowsCount > 0) {
-      // The update was successful
-      res.sendStatus(204); // No Content
-    } else {
-      res.sendStatus(404); // Not Found
-    }
+      res.sendStatus(200);
+    } 
+
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -95,5 +77,5 @@ module.exports = {
   getUserWithRole,
   postUser,
   userGotNewNotification,
-  notification
+  notification,
 };
