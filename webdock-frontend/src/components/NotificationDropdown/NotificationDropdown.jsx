@@ -5,10 +5,6 @@ import timeAgo from "../../helper/timeAgo"
 
 export default function NotificationDropdown( {NotificationArray}) {
 
-    const redirectToPost = (postId) => {
-        window.location.href = `/posts/${postId}`
-    }
-
     const getFirstWord = (sentence) => {
         const words = sentence.split(' ')
         // return words.length > 0 ? words[0] : ''; 
@@ -56,12 +52,17 @@ export default function NotificationDropdown( {NotificationArray}) {
           });
     }
 
+    const redirectToPost = (postId) => {
+        window.location.href = `/posts/${postId}`
+    }
+
     return (
         <div className="notification-dropdown-container">
             <p className="notification-dropdown-container__title">Notifications</p>
             <ul className="notification-dropdown-container__list">
                 {NotificationArray.map(item => (
-                    <li onClick={() => redirectToPost(item.post_fk)} onMouseEnter={() => hoverNotification(item)} className="notification-dropdown-container__list-item" key={item.id}>
+                    // <li onClick={() => redirectToPost(item.post_fk)} onMouseEnter={() => hoverNotification(item)} className="notification-dropdown-container__list-item" key={item.id}>
+                    <li onClick={() => {redirectToPost(item.post_fk); hoverNotification(item);}} className="notification-dropdown-container__list-item" key={item.id}>
                         <div className={`comment-user__avatarURL${item.User && checkAdmin(item.User.email) ? "--admin" : ""}`}>
                             {item.User.name.charAt(0)}
                             <div className={`notification-type ${getNotificationTypeForClass(item.Type_of_notification.notification_type)}`}></div>

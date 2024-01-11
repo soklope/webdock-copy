@@ -1,0 +1,18 @@
+@use "../../global-styling/Variables.scss" as v;
+@use "../../global-styling/mixins" as mix;
+
+.notification-counter {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: v.$orange;
+    font-family: v.$secondary-font;
+    font-size: 0.8rem;
+    color: white;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    bottom: 10px;
+    right: 20px;
+}

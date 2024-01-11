@@ -5,7 +5,7 @@ const useNotificationArrayStore = create((set) => ({
 
     setNotificationStore: (newArrayValue) => {
         set((state) => ({ notificationArray: newArrayValue }))
-    }
+    },
 }))
 
 export default useNotificationArrayStore;

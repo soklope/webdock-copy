@@ -7,6 +7,7 @@ import userStore from "../../stores/loginStore";
 import NotificationDropdown from "../../components/NotificationDropdown/NotificationDropdown";
 import fetchAllNotifications from "../../services/fetchAllNotifications";
 import useNotificationArrayStore from "../../stores/notificationStore";
+import NotificationCounter from "../../components/NotificationCounter/NotificationCounter";
 
 export default function Navigation() {
   const { logout } = userStore()
@@ -14,7 +15,7 @@ export default function Navigation() {
   const [notificationDropdown, setNotificationDropdown] = useState(false)
   const [notificationArrayData, setNotificationArrayData] = useState([])
   const user = localStorage.getItem("user")
-  const { setNotificationStore } = useNotificationArrayStore()
+  const { setNotificationStore, notificationArray } = useNotificationArrayStore()
 
   const toggleDropdownMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -36,11 +37,11 @@ export default function Navigation() {
         const fetchedData = await fetchAllNotifications(parsedUser.id);
         setNotificationArrayData(fetchedData)
         setNotificationStore(fetchedData)
-        // console.log(fetchedData);
       } catch (error) {
         console.error('Error setting state:', error);
       }
     };
+    
     fetchNotifications();
   }, []); 
 
@@ -72,6 +73,9 @@ export default function Navigation() {
                     />
                   )
                 }
+                <NotificationCounter 
+                  UnfilteredNotificationArray={notificationArrayData}
+                />
               </li>
 
               <li className="navigation-list-item">
