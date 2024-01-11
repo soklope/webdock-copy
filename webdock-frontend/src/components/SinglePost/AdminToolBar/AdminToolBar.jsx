@@ -4,6 +4,8 @@ import useModalStore from "../../../stores/modalStore";
 export default function AdminToolBar( {itemId} ) {
   const [showDropdown, setShowDropdown] = useState(false)
   const { toggleMergeModal } = useModalStore()
+  const loggedInUser = localStorage.getItem("user");
+
 
   const handleDelete = async () => {
       try {
@@ -28,10 +30,11 @@ export default function AdminToolBar( {itemId} ) {
   const handleChangeStatus = async (newStatus) => {
     try {
         const response = await fetch(`${window.apiHostName}/v1/changePostStatus/${itemId}/status/${newStatus}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+          method: 'PATCH',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: loggedInUser,
         });
 
         if (response.ok) {

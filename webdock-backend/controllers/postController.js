@@ -307,25 +307,27 @@ const changeStatus = async (req, res) => {
     const postId = req.params.id;
     const newStatus = req.params.status;
     const post = await db.Post.findByPk(postId);
+    const actionUser = req.body;
 
+    
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
-
+    
     post.status_id = newStatus;
-
+    
     await post.save();
-
+    
     const postAuthor = await db.Post.findOne({
       where: {
         id: postId,
       },
     });
-
+    
     await db.Notification.create({
       post_fk: postId,
       target_user_fk: postAuthor.user_id,
-      action_user_fk: 22649,
+      action_user_fk: actionUser.id,
       type_of_notification_fk: 3,
       notification_seen: false,
       createdAt: new Date(),
