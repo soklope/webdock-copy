@@ -61,7 +61,6 @@ export default function NotificationDropdown( {NotificationArray}) {
             <p className="notification-dropdown-container__title">Notifications</p>
             <ul className="notification-dropdown-container__list">
                 {NotificationArray.map(item => (
-                    // <li onClick={() => redirectToPost(item.post_fk)} onMouseEnter={() => hoverNotification(item)} className="notification-dropdown-container__list-item" key={item.id}>
                     <li onClick={() => {redirectToPost(item.post_fk); hoverNotification(item);}} className="notification-dropdown-container__list-item" key={item.id}>
                         <div className={`comment-user__avatarURL${item.User && checkAdmin(item.User.email) ? "--admin" : ""}`}>
                             {item.User.name.charAt(0)}
@@ -81,10 +80,3 @@ export default function NotificationDropdown( {NotificationArray}) {
         </div>
     )
 }
-
-// To do
-// Above 10 notifications, delete the 11th item, sorted by oldest +
-// Icon to show type of notification in the bottom of the avatar +
-// Notify when post is moved to new status +
-// Alert in the NAV when a new notification is recieved
-// Close dropdown, when anywhere but the dropdown is clicked

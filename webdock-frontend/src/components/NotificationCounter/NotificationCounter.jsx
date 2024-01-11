@@ -13,7 +13,6 @@ export default function NotificationCounter( {UnfilteredNotificationArray} ) {
         setFilteredNotificationArray(filterNotifications(UnfilteredNotificationArray))
     }, [UnfilteredNotificationArray])
 
-
     return (
         <>
             {  

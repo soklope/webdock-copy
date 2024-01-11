@@ -306,13 +306,12 @@ const changeStatus = async (req, res) => {
   try {
     const postId = req.params.id;
     const newStatus = req.params.status;
-
     const post = await db.Post.findByPk(postId);
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
-    const oldStatus = post.status_id;
+
     post.status_id = newStatus;
 
     await post.save();
@@ -323,7 +322,7 @@ const changeStatus = async (req, res) => {
       },
     });
 
-    const createdNotification = await db.Notification.create({
+    await db.Notification.create({
       post_fk: postId,
       target_user_fk: postAuthor.user_id,
       action_user_fk: 22649,
@@ -338,7 +337,6 @@ const changeStatus = async (req, res) => {
     res.status(200).json({
       message: "Post status updated successfully",
       postId,
-      oldStatus,
       newStatus,
     });
   } catch (error) {
