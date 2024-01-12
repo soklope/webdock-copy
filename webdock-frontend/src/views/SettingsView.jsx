@@ -14,7 +14,7 @@ export default function SettingsView() {
     const fetchUserSettings = async () => {
       try {
         const response = await fetch("/api/user/settings", {
-          // Additional options like headers can be included here
+          // TODO: Add headers (can i add the jwt token as header to get login? (to remove the login insecurity from frontend))
           method: "GET",
         });
 
@@ -35,12 +35,12 @@ export default function SettingsView() {
   }, []);
 
   if (loading) {
-    console.log(loading)
+    console.log('are we loading?', loading);
     return <p>Loading user settings...</p>;
   }
 
   if (error) {
-    console.log(error)
+    console.log('error:', error);
     return  <p>Error: {error}</p>;
   }
 
@@ -78,3 +78,6 @@ export default function SettingsView() {
 
 // TODO: Setup /api/v1/users/:userId/settings call to backend
 // TODO:
+
+// Notes:
+// no need to check if logged in, can only acces option when logged in
