@@ -8,12 +8,19 @@ export default function SettingsView() {
   const [error, setError] = useState(null);
 
   const user = localStorage.getItem("user");
-  const parsedUser = JSON.parse(user);
+  const parsedUser = user ? JSON.parse(user) : null;
+
+  // TODO: DEV CODE DELETE ME
+  if (parsedUser) {
+    console.log(parsedUser.id);
+  } else {
+    alert("User data not found in localStorage");
+  }
 
   useEffect(() => {
     const fetchUserSettings = async () => {
       try {
-        const response = await fetch("/api/user/settings", {
+        const response = await fetch(`/api/users/${parsedUser.id}/settings`, {
           // TODO: Add headers (can i add the jwt token as header to get login? (to remove the login insecurity from frontend))
           method: "GET",
         });
