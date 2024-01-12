@@ -1,11 +1,49 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 
 import { checkAdmin } from "../helper/checkAdmin";
 
 export default function SettingsView() {
-    const user = localStorage.getItem("user");
-    const parsedUser = JSON.parse(user)
-    console.log(parsedUser.email)
+  const [userSettings, setUserSettings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const user = localStorage.getItem("user");
+  const parsedUser = JSON.parse(user);
+
+  useEffect(() => {
+    const fetchUserSettings = async () => {
+      try {
+        const response = await fetch("/api/user/settings", {
+          // Additional options like headers can be included here
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch users current settings");
+        }
+
+        const data = await response.json();
+        setUserSettings(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserSettings();
+  }, []);
+
+  if (loading) {
+    console.log(loading)
+    return <p>Loading user settings...</p>;
+  }
+
+  if (error) {
+    console.log(error)
+    return  <p>Error: {error}</p>;
+  }
+
   return (
     <div>
       <br />
@@ -28,6 +66,10 @@ export default function SettingsView() {
         <div>
           <label>setting numero tres here</label>
           <input type="checkbox" />
+        </div>
+
+        <div>
+          <input type="submit" value="Confirm changes" />
         </div>
       </section>
     </div>
