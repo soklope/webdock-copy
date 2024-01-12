@@ -33,13 +33,13 @@ export default function Navigation() {
           </Link>
 
         </div>
-
+  
         {
           user &&
           <>
             <ul className="menu-items">
               <li>
-                <Link className="menu-items__profile" />
+                <Link className="menu-items__profile" to={'/settings'} />
               </li>
 
               <li onClick={handleLogoutClick}>

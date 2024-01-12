@@ -33,4 +33,3 @@ router.post('/handlelogin', VerifyController.verifyUser);
 router.post('/createcomment', CommentController.createNewComment);
 
 module.exports = router;
-
