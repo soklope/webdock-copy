@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      userHasSettings.belongsTo(models.Settings, {
+        foreignKey: "settings_id",
+      });
     }
   }
   userHasSettings.init({
@@ -20,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'userHasSettings',
+    defaultScope: {
+      attributes: {
+        exclude: ['id', 'createdAt', 'updatedAt', 'user_id'],
+      },
+      order: [["id", "ASC"]], //default is ascending, but is more readble with this line
+    },
   });
   return userHasSettings;
 };
