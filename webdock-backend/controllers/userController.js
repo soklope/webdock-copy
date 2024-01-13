@@ -3,10 +3,9 @@ const db = require("../models");
 
 const getUserSettings = async (req, res) => {
   const userId = req.params.userId;
-  
+  console.log('userID is:' , userId)
   try {
-    // Find user settings based on the user ID
-    const userSettings = await Settings.findOne({
+    const userSettings = await db.Settings.findOne({
       where: { userId: userId },
     });
 
@@ -19,7 +18,6 @@ const getUserSettings = async (req, res) => {
     console.error('Error fetching user settings:', error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
-
 };
 
 module.exports = {

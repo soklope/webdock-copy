@@ -10,20 +10,14 @@ export default function SettingsView() {
   const user = localStorage.getItem("user");
   const parsedUser = user ? JSON.parse(user) : null;
 
-  // TODO: DEV CODE DELETE ME
-  if (parsedUser) {
-    console.log(parsedUser.id);
-  } else {
-    alert("User data not found in localStorage");
-  }
-
   useEffect(() => {
     const fetchUserSettings = async () => {
       try {
-        const response = await fetch(`/api/users/${parsedUser.id}/settings`, {
+        const response = await fetch(`${window.apiHostName}/v1/users/${parsedUser.id}/settings`, {
           // TODO: Add headers (can i add the jwt token as header to get login? (to remove the login insecurity from frontend))
           method: "GET",
         });
+        // Send isadmin true/false med i fetch, for at validere admin permissions (email forward setting)
 
         if (!response.ok) {
           throw new Error("Failed to fetch users current settings");
@@ -50,7 +44,6 @@ export default function SettingsView() {
     console.log('error:', error);
     return  <p>Error: {error}</p>;
   }
-
   return (
     <div>
       <br />
