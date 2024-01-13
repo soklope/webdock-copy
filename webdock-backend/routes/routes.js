@@ -14,6 +14,7 @@ const CommentController = require ('../controllers/commentController.js')
 const router = express.Router();
 
 router.get('/users/:userId/settings', UserController.getUserSettings);
+router.put('/users/:userId/settings', UserController.updateUserSettings);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);

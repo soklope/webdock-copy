@@ -36,11 +36,10 @@ export default function SettingsView() {
 				});
 
 				setUserSettings(transformedData);
-        if (transformedData.theme == 'dark' ) {
-          setTheme('dark')
-        } else {
-          setTheme('light')
-        }
+        
+        if (transformedData.theme != theme ) {
+          setTheme(transformedData.theme)
+        } 
         
 			} catch (error) {
 				setError(error.message);
@@ -52,9 +51,9 @@ export default function SettingsView() {
 		fetchUserSettings();
 	}, []);
 
-	useEffect(() => {
-		console.log(userSettings);
-	}, [userSettings]);
+	// useEffect(() => {
+	// 	console.log(userSettings);
+	// }, [userSettings]);
 
   const handleDarkModeChange = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';

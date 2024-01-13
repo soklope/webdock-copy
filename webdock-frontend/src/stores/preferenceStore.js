@@ -13,13 +13,22 @@ const usePreferenceStore = create((set) => ({
         const user = localStorage.getItem("user");
         const parsedUser = user ? JSON.parse(user) : null;
         
-        await fetch(`${window.apiHostName}/v1/users/${parsedUser.id}/settings`, {
+        const response = await fetch(`${window.apiHostName}/v1/users/${parsedUser.id}/settings`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ theme: newTheme }),
         });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.message, data.theme);
+        } else { 
+            const errorData = await response.json();
+            console.error(errorData.error)
+            // console.log("Error", response.status, response.statusText)
+        }
         
       } catch (error) {
         console.error('Error updating theme on the backend:', error);
