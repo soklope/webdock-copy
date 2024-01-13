@@ -29,40 +29,36 @@ const getUserSettings = async (req, res) => {
 	}
 };
 
+
 const updateUserSettings = async (req, res) => {
-	const user_id = req.params.userId;
-	const { theme } = req.body;
-	console.log(user_id);
-	console.log(theme);
-	try {
-		// Find the settings_id for the "theme" setting
-		const themeSetting = await db.Settings.findOne({
-			where: { name: "theme" },
-		});
-		console.log(themeSetting.id);
-		if (!themeSetting) {
-			return res.status(404).json({ error: "Theme setting not found" });
-		}
+  const user_id = req.params.userId;
+  const { settingName, value } = req.body;
+  
+  try {
+    // Find the settings_id for the specified setting
+    const setting = await db.Settings.findOne({
+      where: { name: settingName },
+    });
+    
+    if (!setting) {
+      return res.status(404).json({ error: `Setting "${settingName}" not found` });
+    }
+    
+    // Update the userHasSetting value with the new setting value
+    const [updatedRowsCount] = await db.userHasSettings.update(
+      { value: value },
+      { where: { user_id, settings_id: setting.id } }
+      );
 
-		// Update the userHasSetting value with the new theme value
-		const [updatedRowsCount] = await db.userHasSettings.update(
-			{ value: theme },
-			{ where: 
-        { 
-          user_id: user_id, 
-          settings_id: themeSetting.id
-         }}
-		);
+    if (updatedRowsCount === 0) {
+      return res.status(404).json({ error: 'No rows to update' });
+    }
 
-		if (updatedRowsCount === 0) {
-			return res.status(404).json({ error: "User setting not found" });
-		}
-
-		return res.status(200).json({ message: "Theme updated successfully", theme });
-	} catch (error) {
-		console.error("Error updating user settings:", error.message);
-		res.status(500).json({ error: "Internal server error" });
-	}
+    return res.status(200).json({ message: `${settingName} updated successfully` });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 module.exports = {
