@@ -1,16 +1,30 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Sling as Hamburger } from "hamburger-react";
+
 import "./Navigation.scss";
 import logo from "../../content/images/logo_200x200.png";
+
 import userStore from "../../stores/loginStore";
 import usePreferenceStore from "../../stores/preferenceStore";
 
 export default function Navigation() {
-  const { logout } = userStore()
-  const [isOpen, setIsOpen] = useState(false);
-  const user = localStorage.getItem("user")
+  const { authToken, setAuthState, logout } = userStore();
   const { theme } = usePreferenceStore();
+  const [isOpen, setIsOpen] = useState(false);
+  
+  useEffect(() => {
+    checkLoggedInUser();
+  }, []);
+  
+  const checkLoggedInUser = () => {
+    const storedAuthToken = localStorage.getItem("authToken")
+    if (storedAuthToken) {
+      setAuthState(storedAuthToken);
+    } else {
+      setAuthState(null);
+    }
+  };
 
   const toggleDropdownMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -20,7 +34,7 @@ export default function Navigation() {
     logout();
     // window.location.href = "/login"
   };
-
+  
   return (
     <nav className={`${theme === 'dark' ? 'nav--dark' : "nav"}`}>
       <div className="nav-wrap">
@@ -37,7 +51,7 @@ export default function Navigation() {
         </div>
   
         {
-          user &&
+          authToken &&
           <>
             <ul className="menu-items">
               <li>
@@ -51,7 +65,7 @@ export default function Navigation() {
           </>
         }
 
-        {!user &&
+        {!authToken &&
           <Link className="nav-button-container" to={'/login'}>
             <button className="nav-button-container__log-in">Log In</button>
           </Link>

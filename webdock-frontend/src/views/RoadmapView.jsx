@@ -1,7 +1,8 @@
-import "./view-styles/RoadmapView.scss";
 import { useEffect } from "react";
+
 import { fetchData } from "../services/ssoService";
-import userStore from "../stores/loginStore";
+
+import "./view-styles/RoadmapView.scss";
 
 import CreatePostBtn from "../components/CreatePostBtn/CreatePostBtn";
 import ViewToggleSwitchContainer from "../components/ViewToggleSwitchContainer/ViewToggleSwitchContainer";
@@ -10,31 +11,32 @@ import RoadmapContainerInProgress from "../components/RoadmapContainer/RoadmapCo
 import RoadmapContainerComplete from "../components/RoadmapContainer/RoadmapContainerComplete";
 
 import useRoadmapStore from "../stores/viewStore";
+import useLoginStore from "../stores/loginStore";
 import ListView from "./ListView";
 
 export default function RoadmapView() {
   const { roadmapView } = useRoadmapStore();
-  const { setUserState } = userStore()
-  const userIsLoggedIn = JSON.parse(localStorage.getItem('user'))
-  console.log('userIsLoggedIn:', userIsLoggedIn) 
+  const { setAuthState } = useLoginStore();
 
-  const fetchDataAndHandleUserData = async () => {
-      try {
-          const userData = await fetchData();
-          setUserState(userData)
-      } catch (error) {
-          console.log(error);
-      }
-  };
-  
   useEffect(() => {
-    if (!userIsLoggedIn) {
-      fetchDataAndHandleUserData();
-    } else {
-      setUserState(userIsLoggedIn)
-    }
-  }, []);
+    // Function to check if there's an ssoToken in the URL
+    const checkSSOToken = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ssoToken = urlParams.get("ssoToken");
 
+      if (ssoToken) {
+        try {
+          const fetchedData = await fetchData(ssoToken);
+          setAuthState(fetchedData);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    checkSSOToken();
+  }, []); 
+  
   return (
     <>
       <div className="wrap">

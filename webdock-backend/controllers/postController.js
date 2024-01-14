@@ -228,7 +228,7 @@ const createNewPost = async (req, res) => {
 
 		const externalEndpoint ="https://webdock.io/en/platform_data/feature_requests/new";
 		const externalData = {
-			userID: req.user_id,
+			userID: req.user.id,
 			title: title,
 			description: content,
 			category: 1,
@@ -245,8 +245,8 @@ const createNewPost = async (req, res) => {
 			category_id,
 			title,
 			content,
-      // user_id from extractUserFromToken middleware
-			user_id: req.user_id,
+      // user.id from extractUserFromToken middleware
+			user_id: req.user.id,
 			image: files,
 		});
 
@@ -255,7 +255,7 @@ const createNewPost = async (req, res) => {
 			message: "Data saved successfully",
 			data: result,
 		});
-    
+
 	} catch (error) {
 		// sequelize error handling:
 		if (error.name === "SequelizeValidationError") {

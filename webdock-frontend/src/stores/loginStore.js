@@ -1,16 +1,14 @@
 import { create } from 'zustand';
 
 const userStore = create((set) => ({
-    user: null,
+  authToken: null,
 
-    setUserState: (userData) => set({
-        user: userData
-    }),
-    
-    logout: () => {
-        localStorage.removeItem('user');
-        set({ user: null });
-    },
+  setAuthState: (token) => set({ authToken: token }),
+
+  logout: () => {
+    set({ authToken: null });
+    localStorage.removeItem('authToken');
+  },
 }));
 
 export default userStore;

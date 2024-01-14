@@ -10,6 +10,7 @@ export default function SettingsView() {
 	const [error, setError] = useState(null);
 
 	const user = localStorage.getItem("user");
+	const authToken = localStorage.getItem("authToken");
 	const parsedUser = user ? JSON.parse(user) : null;
 
 	useEffect(() => {
@@ -50,10 +51,6 @@ export default function SettingsView() {
 
 		fetchUserSettings();
 	}, []);
-
-	// useEffect(() => {
-	// 	console.log(userSettings);
-	// }, [userSettings]);
 
   const handleDarkModeChange = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -96,7 +93,7 @@ export default function SettingsView() {
       </div>
 
 			{/* Text Input Field visible only for admins */}
-			{checkAdmin(parsedUser.email) && (
+			{checkAdmin(authToken) && (
 				<div>
           <hr />
 					<h2>Admin Only Settings:</h2>

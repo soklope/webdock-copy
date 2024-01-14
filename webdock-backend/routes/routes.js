@@ -32,7 +32,6 @@ router.patch('/upvotepost/:id', PostController.upvotePost);
 router.delete('/items/:id', PostController.deleteItemById);
 
 router.post('/createpost', upload.array('file'), extractUserFromToken, PostController.createNewPost);
-// router.post('/createpost', upload.array('file'), PostController.createNewPost);
 router.post('/createmerge/:id/newparent/:parentId', PostController.createMerge); 
 
 router.get('/getCategories', CategoryController.getCategories);

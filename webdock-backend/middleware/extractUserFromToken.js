@@ -10,8 +10,7 @@ const extractUserFromToken = (req, res, next) => {
       
       try {
           const decodedToken = decodeToken(ssoToken);
-          
-          req.user_id = decodedToken.id;
+          req.user = decodedToken;
         next();
       } catch (error) {
         res.status(401).json({ error: "Invalid token" });
