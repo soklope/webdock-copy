@@ -223,13 +223,12 @@ const createMerge = async (req, res) => {
 
 const createNewPost = async (req, res) => {
 	try {
-		const { title, content, user_id, category_id } = req.body;
+		const { title, content, category_id } = req.body;
 		const files = req.files;
-		const image = files.map((file) => file.originalname).join(", ");
-    
+
 		const externalEndpoint ="https://webdock.io/en/platform_data/feature_requests/new";
 		const externalData = {
-			userID: parseInt(user_id, 10),
+			userID: req.user_id,
 			title: title,
 			description: content,
 			category: 1,
@@ -246,8 +245,9 @@ const createNewPost = async (req, res) => {
 			category_id,
 			title,
 			content,
-			user_id: parseInt(user_id, 10),
-			image: image,
+      // user_id from extractUserFromToken middleware
+			user_id: req.user_id,
+			image: files,
 		});
 
 		console.log("External API Response:", responseData);
@@ -255,6 +255,7 @@ const createNewPost = async (req, res) => {
 			message: "Data saved successfully",
 			data: result,
 		});
+    
 	} catch (error) {
 		// sequelize error handling:
 		if (error.name === "SequelizeValidationError") {

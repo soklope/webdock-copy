@@ -1,5 +1,6 @@
 async function fetchExternalData(externalEndpoint, externalData) {
   try {
+    console.log(externalData)
     const response = await fetch(externalEndpoint, {
       method: "POST",
       headers: {
