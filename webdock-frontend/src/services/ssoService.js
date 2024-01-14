@@ -15,7 +15,7 @@
 		const userData = await response.json();
         console.log(userData.message)
 
-		localStorage.setItem("authToken", JSON.stringify(ssoToken));
+		localStorage.setItem("authToken", ssoToken);
         return ssoToken
 	} catch (error) {
 		console.error("error fetching data:", error);
