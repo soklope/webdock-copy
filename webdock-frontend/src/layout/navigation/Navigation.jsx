@@ -4,11 +4,13 @@ import { Sling as Hamburger } from "hamburger-react";
 import "./Navigation.scss";
 import logo from "../../content/images/logo_200x200.png";
 import userStore from "../../stores/loginStore";
+import usePreferenceStore from "../../stores/preferenceStore";
 
 export default function Navigation() {
   const { logout } = userStore()
   const [isOpen, setIsOpen] = useState(false);
   const user = localStorage.getItem("user")
+  const { theme } = usePreferenceStore();
 
   const toggleDropdownMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -19,8 +21,9 @@ export default function Navigation() {
     // window.location.href = "/login"
   };
 
+  
   return (
-    <nav>
+    <nav className={`${theme === 'dark' ? 'nav--dark' : "nav"}`}>
       <div className="nav-wrap">
         <div className="navigation-logo">
           <Link className="navigation-link" to="/">
@@ -39,11 +42,11 @@ export default function Navigation() {
           <>
             <ul className="menu-items">
               <li>
-                <Link className="menu-items__profile" to={'/settings'} />
+                <Link className={`${theme === 'dark' ? 'menu-items__profile--dark' : 'menu-items__profile'}`} to={'/settings'} />
               </li>
 
               <li onClick={handleLogoutClick}>
-                <Link className="menu-items__log-out" />
+                <Link className={`${theme === 'dark' ? 'menu-items__log-out--dark' : 'menu-items__log-out'}`} />
               </li>
             </ul>
           </>
@@ -74,8 +77,8 @@ export default function Navigation() {
                   <Link className="nav-dropdown-menu__items__flex" onClick={logout}>
                     <p>Log Out</p>
                     <span className="menu-items__log-out"></span>
-                  </Link>
-                </li>
+                  </Link> 
+                </li>         
 
                 <li>
                   <Link className="nav-dropdown-menu__items__flex" to="/">

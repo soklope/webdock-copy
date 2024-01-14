@@ -1,4 +1,4 @@
-@use "./Variables.scss" as v; 
+@use "./Variables.scss" as v;
 
 * {
 	margin: 0;
@@ -14,13 +14,27 @@ main {
 .background {
 	width: 100vw;
 	height: 100vh;
-	background: linear-gradient(to bottom, #ffffffb3 25%, #ffffff00), url("../content/gfx/background-image.png");
-	background-attachment: fixed; 
-	background-repeat: no-repeat; 
-	background-size: cover; 
+	background: linear-gradient(to bottom, #ffffffb3 25%, #ffffff00),
+		url("../content/gfx/background-image.png");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
 	background-position: center center;
 	overflow: auto;
 	position: relative;
+
+	&--dark {
+		background: linear-gradient(to bottom, #000000b3 100%, #00000000),
+			url("../content/gfx/Icons/comment-icon.svg");
+
+		* {
+			color: v.$offwhite;
+			
+			::placeholder{
+				color: v.$offwhite;
+			}
+		}
+	}
 }
 
 .wrap {
@@ -29,14 +43,13 @@ main {
 	@media screen and (min-width: v.$desktop-screen) {
 		max-width: 1200px;
 		margin: auto;
-
 	}
 }
 
 .hide-on-mobile {
-    display: none;
-	
-    @media screen and (min-width: v.$desktop-screen) {
-        display: block;
-    }
+	display: none;
+
+	@media screen and (min-width: v.$desktop-screen) {
+		display: block;
+	}
 }
