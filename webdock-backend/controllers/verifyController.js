@@ -1,9 +1,7 @@
 const db = require("../models");
 
 const verifyUser = async (req, res) => {
-	try {
-    console.log('HERE HERE LOOK HERE', req.user)
-		
+	try {		
 		const dbUser = await db.User.findOne({
 			where: {
 				id: req.user.id,

@@ -5,25 +5,25 @@ import usePreferenceStore from "../stores/preferenceStore";
 
 export default function SettingsView() {
 	const [userSettings, setUserSettings] = useState({});
-  const { theme, setTheme, layout, setLayout} = usePreferenceStore();
+	const { theme, setTheme, layout, setLayout } = usePreferenceStore();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const user = localStorage.getItem("user");
 	const authToken = localStorage.getItem("authToken");
-	const parsedUser = user ? JSON.parse(user) : null;
 
 	useEffect(() => {
 		const fetchUserSettings = async () => {
 			try {
 				const response = await fetch(
-					`${window.apiHostName}/v1/users/${parsedUser.id}/settings`,
+					`${window.apiHostName}/v1/user/settings`,
 					{
-						// TODO: Add headers (can i add the jwt token as header to get login? (to remove the login insecurity from frontend))
 						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${authToken}`,
+						},
 					}
 				);
-				// Send isadmin true/false med i fetch, for at validere admin permissions (email forward setting)
 
 				if (!response.ok) {
 					throw new Error("Failed to fetch users current settings");
@@ -37,13 +37,13 @@ export default function SettingsView() {
 				});
 
 				setUserSettings(transformedData);
-        
-        if (transformedData.theme != theme ) {
-          setTheme(transformedData.theme)
-        } 
-        
+
+				if (transformedData.theme != theme) {
+					setTheme(transformedData.theme);
+				}
 			} catch (error) {
 				setError(error.message);
+				console.log("tokenFromLsIs:", authToken);
 			} finally {
 				setLoading(false);
 			}
@@ -52,15 +52,15 @@ export default function SettingsView() {
 		fetchUserSettings();
 	}, []);
 
-  const handleDarkModeChange = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-  };
+	const handleDarkModeChange = () => {
+		const newTheme = theme === "light" ? "dark" : "light";
+		setTheme(newTheme);
+	};
 
 	if (loading) {
 		return <p>Loading user settings...</p>;
 	}
-  
+
 	if (error) {
 		console.log("error:", error);
 		return <p>Error: {error}</p>;
@@ -75,35 +75,35 @@ export default function SettingsView() {
 				<label>
 					<input
 						type="checkbox"
-						defaultChecked={theme == 'dark'}
-            onChange={handleDarkModeChange}
+						defaultChecked={theme == "dark"}
+						onChange={handleDarkModeChange}
 					/>
 					Enable Dark Mode
 				</label>
 			</div>
 
-      <div>
-        <p>
-          other settings:
-          <br />
-          * notification behavior (what notifs, get them as emails or on the webpage, osv)
-          <br />
-          * change "my post" behavior
-        </p>
-      </div>
+			<div>
+				<p>
+					other settings:
+					<br />
+					* notification behavior (what notifs, get them as emails or
+					on the webpage, osv)
+					<br />* change "my post" behavior
+				</p>
+			</div>
 
 			{/* Text Input Field visible only for admins */}
 			{checkAdmin(authToken) && (
 				<div>
-          <hr />
+					<hr />
 					<h2>Admin Only Settings:</h2>
-          <label> redirect email </label>
+					<label> redirect email </label>
 					<input type="checkbox" />
-          <br />
-          <label> redirect to </label>
+					<br />
+					<label> redirect to </label>
 					<input type="text" placeholder="example@webdock.io" />
-          <br />
-          <label> redirect untill </label>
+					<br />
+					<label> redirect untill </label>
 					<input type="date" />
 				</div>
 			)}

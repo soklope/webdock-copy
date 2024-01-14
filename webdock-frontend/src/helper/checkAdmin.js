@@ -1,5 +1,4 @@
 export const checkAdmin = async (authToken) => {
-
   try {
     const response = await fetch(
       'http://localhost:8080/verify/isadmin',

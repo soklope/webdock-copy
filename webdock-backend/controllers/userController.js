@@ -1,11 +1,10 @@
 const db = require("../models");
 
 const getUserSettings = async (req, res) => {
-	const user_id = req.params.userId;
-	console.log("userID is:", user_id);
+	// const user_id = req.params.userId;
 	try {
 		const userSettings = await db.userHasSettings.findAll({
-			where: { user_id: user_id },
+			where: { user_id: req.user.id },
 			include: [
 				{
 					model: db.Settings,
@@ -30,7 +29,7 @@ const getUserSettings = async (req, res) => {
 };
 
 const updateUserSettings = async (req, res) => {
-  const user_id = req.params.userId;
+//   const user_id = req.params.userId;
   const { settingName, value } = req.body;
   
   try {
@@ -46,7 +45,7 @@ const updateUserSettings = async (req, res) => {
     // Update the userHasSetting value with the new setting value
     const [updatedRowsCount] = await db.userHasSettings.update(
       { value: value },
-      { where: { user_id, settings_id: setting.id } }
+      { where: { user_id: req.user.id, settings_id: setting.id } }
       );
 
     if (updatedRowsCount === 0) {

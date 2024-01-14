@@ -2,13 +2,13 @@ import create from 'zustand';
 
 const updateSettingInDatabase = async (settingName, value) => {
     try {
-      const user = localStorage.getItem("user");
-      const parsedUser = user ? JSON.parse(user) : null;
+      const authToken = localStorage.getItem("authToken");
   
-      const response = await fetch(`${window.apiHostName}/v1/users/${parsedUser.id}/settings`, {
+      const response = await fetch(`${window.apiHostName}/v1/user/settings`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken}`,
         },
         body: JSON.stringify({ settingName, value}),
       });

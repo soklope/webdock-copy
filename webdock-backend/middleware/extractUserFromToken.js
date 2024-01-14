@@ -5,9 +5,7 @@ const extractUserFromToken = (req, res, next) => {
     
     if (authorizationHeader && authorizationHeader.startsWith("Bearer ")) {
         // getting the ssotoken by removing the the "bearer " with slice
-        const ssoToken = authorizationHeader.slice(7);
-        // console.log('Received token in middleware:', ssoToken);
-      
+        const ssoToken = authorizationHeader.slice(7);      
       try {
           const decodedToken = decodeToken(ssoToken);
           req.user = decodedToken;

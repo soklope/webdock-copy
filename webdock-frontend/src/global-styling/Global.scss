@@ -24,13 +24,19 @@ main {
 	position: relative;
 
 	&--dark {
-		background: linear-gradient(to bottom, #000000b3 100%, #00000000),
-			url("../content/gfx/Icons/comment-icon.svg");
+		background: linear-gradient(to bottom, #2d2d2db3 100%, #ffffff00),
+			url("../content/gfx/webdock-background-image-dark.png");
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		overflow: auto;
+		position: relative;
 
 		* {
 			color: v.$offwhite;
-			
-			::placeholder{
+
+			::placeholder {
 				color: v.$offwhite;
 			}
 		}

@@ -10,15 +10,13 @@ const { extractUserFromToken } = require('../middleware/extractUserFromToken.js'
 // controllers
 const UserController = require('../controllers/userController.js');
 const PostController = require('../controllers/postController.js')
-const CategoryController = require('../controllers/categoryController.js')
-const VerifyController = require ('../controllers/verifyController.js')
 const CommentController = require ('../controllers/commentController.js');
 
 // api routing
 const router = express.Router();
 
-router.get('/users/:userId/settings', UserController.getUserSettings);
-router.put('/users/:userId/settings', UserController.updateUserSettings);
+router.get('/user/settings', extractUserFromToken, UserController.getUserSettings);
+router.put('/user/settings', extractUserFromToken, UserController.updateUserSettings);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
@@ -33,10 +31,6 @@ router.delete('/items/:id', PostController.deleteItemById);
 
 router.post('/createpost', upload.array('file'), extractUserFromToken, PostController.createNewPost);
 router.post('/createmerge/:id/newparent/:parentId', PostController.createMerge); 
-
-router.get('/getCategories', CategoryController.getCategories);
-
-router.post('/handlelogin', VerifyController.verifyUser);
 
 router.post('/createcomment', CommentController.createNewComment);
 
