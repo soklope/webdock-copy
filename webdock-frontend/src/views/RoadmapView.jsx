@@ -15,7 +15,8 @@ import ListView from "./ListView";
 export default function RoadmapView() {
   const { roadmapView } = useRoadmapStore();
   const { setUserState } = userStore()
-  const userIsLoggedIn = JSON.parse(localStorage.getItem('user')) 
+  const userIsLoggedIn = JSON.parse(localStorage.getItem('user'))
+  console.log('userIsLoggedIn:', userIsLoggedIn) 
 
   const fetchDataAndHandleUserData = async () => {
       try {

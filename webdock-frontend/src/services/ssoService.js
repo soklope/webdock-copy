@@ -15,6 +15,7 @@ export const fetchData = async () => {
         const userData = await response.json()
 
         localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('authToken', JSON.stringify(ssoToken));
 
         return userData;
     } catch (error) {

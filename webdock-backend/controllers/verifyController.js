@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const db = require('../models');
+const { decodeToken } = require('../utility/decodeToken')
 
 const verifyUser = async (req, res) => {
     try {
@@ -10,18 +10,17 @@ const verifyUser = async (req, res) => {
             // return res.status(400).json({ error: 'Token is missing' });
         }
     
-        const user = jwt.verify(ssoToken, 'e389bb7b-dc58-4b0b-8f54-dac159d5a609');
+        const decodedToken = decodeToken(ssoToken)
     
         const dbUser = await db.User.findOne({ where: {
-            id: user.id
+            id: decodedToken.id
           }});
 
           if (!dbUser) {
-            db.User.create(user);
+            db.decodeToken.create(decodedToken);
           }
 
-        console.log(user, ssoToken);
-        res.status(200).json(user);
+        res.status(200).json(decodedToken);
     } catch (error) {
         console.error(error);
         res.status(401).json({ error: 'Invalid token' });
