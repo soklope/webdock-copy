@@ -21,7 +21,6 @@ export default function Navigation() {
     // window.location.href = "/login"
   };
 
-  
   return (
     <nav className={`${theme === 'dark' ? 'nav--dark' : "nav"}`}>
       <div className="nav-wrap">

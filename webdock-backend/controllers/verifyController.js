@@ -20,8 +20,8 @@ const verifyUser = async (req, res) => {
             db.User.create(user);
           }
 
-        console.log(user);
-        res.json(user);
+        console.log(user, ssoToken);
+        res.status(200).json(user);
     } catch (error) {
         console.error(error);
         res.status(401).json({ error: 'Invalid token' });

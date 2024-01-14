@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import fetchPostsByStatus from "../../services/fetchPostByStatusService";
 import "./RoadmapContainer.scss";
 import RoadmapChildren from "../RoadmapChildren/RoadmapChildren";
+import usePreferenceStore from "../../stores/preferenceStore";
 
 export default function RoadmapContainerPlanned() {
   const [containerIsOpen, setContainerIsOpen] = useState(false);
   const [postCount, setPostCount] = useState(0);
   const [inProgressArray, setInProgressArray] = useState([])
+  const { theme } = usePreferenceStore
 
   useEffect(() => {
     const fetchDataAndSetState = async () => {
@@ -41,7 +43,7 @@ export default function RoadmapContainerPlanned() {
   
   return (
     <div className="roadmap-container">
-      <div className="roadmap-container__tooltip" onClick={openContainer}>
+      <div className={`${theme === 'dark' ? 'roadmap-container__tooltip--dark' : 'roadmap-container__tooltip'}`} onClick={openContainer}>
         <p>In Progress</p>
         <span className={`roadmap-container__dropdown-icon ${containerIsOpen ? "rotate" : ""}`}></span>
         <p className="roadmap-container__postcount">{postCount}</p>

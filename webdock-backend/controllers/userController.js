@@ -29,7 +29,6 @@ const getUserSettings = async (req, res) => {
 	}
 };
 
-
 const updateUserSettings = async (req, res) => {
   const user_id = req.params.userId;
   const { settingName, value } = req.body;
