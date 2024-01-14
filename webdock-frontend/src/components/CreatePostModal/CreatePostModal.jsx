@@ -51,17 +51,13 @@ export default function CreatePostModal() {
 		},
 	];
 	const { modalIsOpen, toggleModal } = useModalStore();
-	const [selectedFiles, setSelectedFiles] = useState([]);
 	const fileUploadRef = useRef();
-	// const [userId, setUserId] = useState(0)
-	const user = JSON.parse(localStorage.getItem("user"));
 	const authToken = localStorage.getItem("authToken");
 	const [postData, setPostData] = useState({
 		category_id: 0,
 		title: "",
 		content: "detail",
 		image: [],
-		// user_id: userId,
 	});
 
 	const handleCloseModal = () => {
@@ -95,10 +91,9 @@ export default function CreatePostModal() {
 				category_id: postData.category_id,
 				title: postData.title,
 				content: postData.content,
-				// user_id: user.id, //no longer necessary, sending token instead
 				image: postData.image,
 			};
-      console.log(authToken)
+
 			const response = await fetch(
 				`${window.apiHostName}/v1/createpost`,
 				{
@@ -113,8 +108,6 @@ export default function CreatePostModal() {
 
 			if (response.ok) {
 				const result = await response.json();
-				console.log("Response:", result);
-
 				const newPostId = result.data.id;
 				// redirect til ny post
 				window.location.href = `/posts/${newPostId}`;
