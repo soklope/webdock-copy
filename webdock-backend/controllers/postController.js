@@ -94,7 +94,7 @@ const getAllPostsByStatus = (req, res) => {
 
 const post = (req, res) => {
 	const postId = req.params.id;
-
+	
 	db.Post.findByPk(postId, {
 		where: { postId: postId },
 		include: [
@@ -133,8 +133,62 @@ const post = (req, res) => {
 		],
 	})
 		.then((post) => {
-			res.json(post);
-		})
+			const isMyPost = post.User.id === req.user.id;
+
+			const responseData = {
+			  ...post.toJSON(), //keep all the post data with spread operator, then add myPost at the end
+			  myPost: isMyPost,
+			};
+			res.json(responseData);
+		  })
+		.catch((error) => {
+			console.error(error);
+			res.sendStatus(500);
+		});
+};
+
+const getAllPosts = (req, res) => {
+	db.Post.findAll({
+		include: [
+			{
+				model: db.Comment,
+				separate: true,
+				include: [
+					{
+						model: db.Reply,
+						separate: true,
+						include: [
+							{
+								model: db.User,
+								attributes: ["name", "email"],
+							},
+						],
+					},
+					{
+						model: db.User,
+						attributes: ["name", "email"],
+					},
+				],
+			},
+			{
+				model: db.Status,
+				attributes: ["status"],
+			},
+			{
+				model: db.Category,
+				attributes: ["category"],
+			},
+			{
+				model: db.User,
+				attributes: ["name", "email", "id"],
+			},
+		],
+	})
+	.then((posts) => {
+		// Filter the posts where author == user.id from token
+		const userPosts = posts.filter(post => post.User.id === req.user.id);
+		res.json(userPosts);
+	  })
 		.catch((error) => {
 			console.error(error);
 			res.sendStatus(500);
@@ -364,6 +418,7 @@ module.exports = {
 	getAllPostsByStatus,
 	postIsUpvotedBy,
 	post,
+	getAllPosts,
 	mergedPost,
 	createMerge,
 	createNewPost,

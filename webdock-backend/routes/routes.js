@@ -18,9 +18,11 @@ const router = express.Router();
 router.get('/user/settings', extractUserFromToken, UserController.getUserSettings);
 router.put('/user/settings', extractUserFromToken, UserController.updateUserSettings);
 
+router.get('/post/:id', extractUserFromToken, PostController.post); 
+router.get('/posts/', extractUserFromToken, PostController.getAllPosts); 
+
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
-router.get('/post/:id', PostController.post); 
 router.get('/merged-post/:id', PostController.mergedPost); 
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); 
 
@@ -31,7 +33,7 @@ router.delete('/items/:id', PostController.deleteItemById);
 
 router.post('/createpost', upload.array('file'), extractUserFromToken, PostController.createNewPost);
 router.post('/createmerge/:id/newparent/:parentId', PostController.createMerge); 
-
 router.post('/createcomment', CommentController.createNewComment);
+
 
 module.exports = router;

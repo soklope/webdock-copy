@@ -6,72 +6,76 @@ import "./view-styles/RoadmapView.scss";
 
 import CreatePostBtn from "../components/CreatePostBtn/CreatePostBtn";
 import ViewToggleSwitchContainer from "../components/ViewToggleSwitchContainer/ViewToggleSwitchContainer";
+
+import RoadmapContainerMyPost from "../components/RoadmapContainer/RoadmapContainerMyPost";
 import RoadmapContainerPlanned from "../components/RoadmapContainer/RoadmapContainerPlanned";
 import RoadmapContainerInProgress from "../components/RoadmapContainer/RoadmapContainerInProgress";
 import RoadmapContainerComplete from "../components/RoadmapContainer/RoadmapContainerComplete";
 
 import useRoadmapStore from "../stores/viewStore";
 import useLoginStore from "../stores/loginStore";
+import usePreferenceStore from "../stores/preferenceStore";
 import ListView from "./ListView";
 
 export default function RoadmapView() {
-  const { roadmapView } = useRoadmapStore();
-  const { setAuthState } = useLoginStore();
+	const { roadmapView } = useRoadmapStore();
+	const { setAuthState } = useLoginStore();
+	const { layout} = usePreferenceStore();
 
-  useEffect(() => {
-    // Function to check if there's an ssoToken in the URL
-    const checkSSOToken = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const ssoToken = urlParams.get("ssoToken");
+	useEffect(() => {
+		// Function to check if there's an ssoToken in the URL
+		const checkSSOToken = async () => {
+			const urlParams = new URLSearchParams(window.location.search);
+			const ssoToken = urlParams.get("ssoToken");
 
-      if (ssoToken) {
-        try {
-          const fetchedData = await fetchData(ssoToken);
-          setAuthState(fetchedData);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-    };
+			if (ssoToken) {
+				try {
+					const fetchedData = await fetchData(ssoToken);
+					setAuthState(fetchedData);
+				} catch (error) {
+					console.error("Error fetching data:", error);
+				}
+			}
+		};
+		checkSSOToken();
+	}, []);
 
-    checkSSOToken();
-  }, []); 
-  
-  return (
-    <>
-      <div className="wrap">
-        <div className="heading">
-          <h1 className="heading__title">Roadmap</h1>
-        </div>
+	return (
+		<>
+			<div className="wrap">
+				<div className="heading">
+					<h1 className="heading__title">Roadmap</h1>
+				</div>
 
-        <main>
-          <section className="filter-grid-container">
-            <div className="filter-grid-create-btn">
-              <CreatePostBtn />
-            </div>
+				<main>
+					<section className="filter-grid-container">
+						<div className="filter-grid-create-btn">
+							<CreatePostBtn />
+						</div>
 
-            <div className="filter-grid-toggle-btn">
-              <ViewToggleSwitchContainer />
-            </div>
-          </section>
+						<div className="filter-grid-toggle-btn">
+							<ViewToggleSwitchContainer />
+						</div>
+					</section>
 
-          {
-            roadmapView ?
+					{roadmapView ? (
+						<div className="roadmap-flex-container slide-right-animation">
+              {
+                layout == "enabled" &&
+                <RoadmapContainerMyPost />
 
-            <div className="roadmap-flex-container slide-right-animation">
-              <RoadmapContainerPlanned />
-              <RoadmapContainerInProgress />
-              <RoadmapContainerComplete />
-            </div>
-
-            :
-
-            <div className="slide-left-animation">
-              <ListView />
-            </div>
-          }
-        </main>
-      </div>
-    </>
-  );
+              }
+							<RoadmapContainerPlanned />
+							<RoadmapContainerInProgress />
+							<RoadmapContainerComplete />
+						</div>
+					) : (
+						<div className="slide-left-animation">
+							<ListView />
+						</div>
+					)}
+				</main>
+			</div>
+		</>
+	);
 }

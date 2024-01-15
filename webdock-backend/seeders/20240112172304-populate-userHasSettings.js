@@ -14,7 +14,7 @@ module.exports = {
       {
         user_id: 22656,
         settings_id: 2,
-        value: "limited",
+        value: "disabled",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

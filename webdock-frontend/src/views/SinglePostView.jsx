@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { checkAdmin } from "../helper/checkAdmin.js";
+import { checkAdmin, checkUserRole } from "../helper/checkAdmin.js";
 import useModalStore from "../stores/modalStore.js";
 
 import SinglePostHeading from "../components/SinglePost/SinglePostHeading/SinglePostHeading";
@@ -21,14 +21,25 @@ export default function SinglePostView() {
 
   const { id } = useParams();
   const userRole = JSON.parse(localStorage.getItem("user"));
+  const authToken = localStorage.getItem("authToken");
+
   const [userId, setUserId] = useState(0);
   const { setNewPostParam } = useModalStore();
 
   useEffect(() => {
     const fetchSinglePost = async () => {
       try {
-        const response = await fetch(`${window.apiHostName}/v1/post/${id}`);
+        const response = await fetch(`${window.apiHostName}/v1/post/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${authToken}`,
+          },
+        }
+        );
         const data = await response.json();
+        console.log(data.myPost)
         setPost(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -90,7 +101,7 @@ export default function SinglePostView() {
               Back
             </Link>
 
-            {userRole && checkAdmin(userRole.email) && (
+            {checkUserRole(authToken) && (
               <>
                 <AdminToolBar itemId={id} />
               </>
@@ -111,7 +122,7 @@ export default function SinglePostView() {
               postDate={post.createdAt}
               postAuthor={post.User.name}
               isAdmin={checkAdmin(post.User.email)}
-              myOwnStatus={userId === post.User.id ? true : false}
+              myOwnStatus={post.myPost}
             />
           </div>
 

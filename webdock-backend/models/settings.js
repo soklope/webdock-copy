@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 			sequelize,
 			modelName: "Settings",
 			defaultScope: {
-        attributes: {
-          exclude: ['createdAt', 'updatedAt', 'user_id'],
-        },
-        order: [["id", "ASC"]], //default is ascending, but is more readble with this line
-      },
+				attributes: {
+					exclude: ["createdAt", "updatedAt", "user_id"],
+				},
+				order: [["id", "ASC"]], 
+			},
 		}
 	);
 	return Settings;

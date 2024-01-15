@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 
-import { checkAdmin } from "../helper/checkAdmin";
+import "./view-styles/SettingsView.scss";
+
+import { checkUserRole } from "../helper/checkAdmin";
 import usePreferenceStore from "../stores/preferenceStore";
 
 export default function SettingsView() {
@@ -20,7 +22,7 @@ export default function SettingsView() {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							"Authorization": `Bearer ${authToken}`,
+							'Authorization': `Bearer ${authToken}`,
 						},
 					}
 				);
@@ -35,15 +37,16 @@ export default function SettingsView() {
 				data.forEach((item) => {
 					transformedData[item.setting] = item.value;
 				});
-
 				setUserSettings(transformedData);
-
+				
 				if (transformedData.theme != theme) {
 					setTheme(transformedData.theme);
 				}
+				if (transformedData.layout != layout) {
+					setLayout(transformedData.layout);
+				}
 			} catch (error) {
 				setError(error.message);
-				console.log("tokenFromLsIs:", authToken);
 			} finally {
 				setLoading(false);
 			}
@@ -52,10 +55,18 @@ export default function SettingsView() {
 		fetchUserSettings();
 	}, []);
 
-	const handleDarkModeChange = () => {
-		const newTheme = theme === "light" ? "dark" : "light";
-		setTheme(newTheme);
-	};
+	const handleSettingChange = (setting, newValue) => {
+		switch (setting) {
+		  case "theme":
+			setTheme(newValue);
+			break;
+		  case "layout":
+			setLayout(newValue);
+			break;
+		  default:
+			console.warn(`Unsupported setting: ${setting}`);
+		}
+	  };
 
 	if (loading) {
 		return <p>Loading user settings...</p>;
@@ -67,18 +78,29 @@ export default function SettingsView() {
 	}
 
 	return (
-		<div>
+		<div className="wrap">
 			<h2>User Settings</h2>
 
 			<div>
 				<strong>Dark Mode:</strong>
-				<label>
+				<label className="switch" >
 					<input
 						type="checkbox"
-						defaultChecked={theme == "dark"}
-						onChange={handleDarkModeChange}
+						defaultChecked={theme === "dark"}
+						onChange={() => handleSettingChange("theme", theme === "light" ? "dark" : "light")}
 					/>
-					Enable Dark Mode
+					<span className="slider"></span>
+				</label>
+			</div>
+			<div>
+				<strong>Layout Mode:</strong>
+				<label className="switch" >
+					<input
+						type="checkbox"
+						defaultChecked={layout === "enabled"}
+						onChange={() => handleSettingChange("layout", layout === "enabled" ? "disabled" : "enabled")}
+					/>
+					<span className="slider"></span>
 				</label>
 			</div>
 
@@ -93,7 +115,7 @@ export default function SettingsView() {
 			</div>
 
 			{/* Text Input Field visible only for admins */}
-			{checkAdmin(authToken) && (
+			{checkUserRole(authToken) && (
 				<div>
 					<hr />
 					<h2>Admin Only Settings:</h2>

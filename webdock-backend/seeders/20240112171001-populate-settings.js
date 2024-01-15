@@ -10,7 +10,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: 'anotherSetting',
+        name: 'layout',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
